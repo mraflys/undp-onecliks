@@ -1,0 +1,9 @@
+1.Daftar gambar perbaiki,
+2.Pada latar belakang belum muncul problemnya apa dampaknya jika tidak dilakukan QA kamu
+3. Tujuan blm relevan dengan judul
+4. Manfaat huruf pertama harus capital
+5. Manfaat bagi perusahaan apa hasil dari yang dilakukan?
+6. Caption 3.1 naikan
+7.  Caption 4.1 letakan center
+8. Pada bab 4 tidak hanya gambar tapi jelaskan hasil pengujiannya seperti apa?
+9. Penjelasan ISPPD dimana?

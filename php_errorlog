@@ -1,0 +1,52 @@
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $paper declared before required parameter $dompdf is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Adapter/CPDF.php on line 183
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $orientation declared before required parameter $dompdf is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Adapter/CPDF.php on line 183
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $paper declared before required parameter $dompdf is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Canvas.php on line 27
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $orientation declared before required parameter $dompdf is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Canvas.php on line 27
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $w declared before required parameter $img is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 5546
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $h declared before required parameter $img is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 5546
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $w declared before required parameter $data is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 5892
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $h declared before required parameter $data is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 5892
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $w declared before required parameter $imgname is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 6236
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $h declared before required parameter $imgname is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 6236
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $channels declared before required parameter $imgname is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 6236
+[11-Oct-2024 09:44:43 Asia/Jakarta] PHP Deprecated:  Optional parameter $corner_style declared before required parameter $pattern_name is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Renderer/AbstractRenderer.php on line 848
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $paper declared before required parameter $dompdf is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Adapter/CPDF.php on line 183
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $orientation declared before required parameter $dompdf is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Adapter/CPDF.php on line 183
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $paper declared before required parameter $dompdf is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Canvas.php on line 27
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $orientation declared before required parameter $dompdf is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Canvas.php on line 27
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $w declared before required parameter $img is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 5546
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $h declared before required parameter $img is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 5546
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $w declared before required parameter $data is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 5892
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $h declared before required parameter $data is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 5892
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $w declared before required parameter $imgname is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 6236
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $h declared before required parameter $imgname is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 6236
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $channels declared before required parameter $imgname is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/lib/Cpdf.php on line 6236
+[18-Oct-2024 12:57:38 Asia/Jakarta] PHP Deprecated:  Optional parameter $corner_style declared before required parameter $pattern_name is implicitly treated as a required parameter in /home/customer/www/undponeclicks.org/public_html/vendor/dompdf/dompdf/src/Renderer/AbstractRenderer.php on line 848
+[18-Oct-2024 06:08:02 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/undponeclicks.org/public_html/public/../vendor/autoload.php' (include_path='.:/usr/local/php81/pear') in /home/customer/www/undponeclicks.org/public_html/public/index.php:24
+Stack trace:
+#0 /home/customer/www/undponeclicks.org/public_html/server.php(21): require_once()
+#1 {main}
+  thrown in /home/customer/www/undponeclicks.org/public_html/public/index.php on line 24
+[18-Oct-2024 06:08:59 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/undponeclicks.org/public_html/public/../vendor/autoload.php' (include_path='.:/usr/local/php81/pear') in /home/customer/www/undponeclicks.org/public_html/public/index.php:24
+Stack trace:
+#0 /home/customer/www/undponeclicks.org/public_html/server.php(21): require_once()
+#1 {main}
+  thrown in /home/customer/www/undponeclicks.org/public_html/public/index.php on line 24
+[18-Oct-2024 06:09:00 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/undponeclicks.org/public_html/public/../vendor/autoload.php' (include_path='.:/usr/local/php81/pear') in /home/customer/www/undponeclicks.org/public_html/public/index.php:24
+Stack trace:
+#0 /home/customer/www/undponeclicks.org/public_html/server.php(21): require_once()
+#1 {main}
+  thrown in /home/customer/www/undponeclicks.org/public_html/public/index.php on line 24
+[18-Oct-2024 06:16:09 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/undponeclicks.org/public_html/public/../vendor/autoload.php' (include_path='.:/usr/local/php81/pear') in /home/customer/www/undponeclicks.org/public_html/public/index.php:24
+Stack trace:
+#0 /home/customer/www/undponeclicks.org/public_html/server.php(21): require_once()
+#1 {main}
+  thrown in /home/customer/www/undponeclicks.org/public_html/public/index.php on line 24
+[18-Oct-2024 10:33:53 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/customer/www/undponeclicks.org/public_html/public/../vendor/autoload.php' (include_path='.:/usr/local/php81/pear') in /home/customer/www/undponeclicks.org/public_html/public/index.php:24
+Stack trace:
+#0 /home/customer/www/undponeclicks.org/public_html/server.php(21): require_once()
+#1 {main}
+  thrown in /home/customer/www/undponeclicks.org/public_html/public/index.php on line 24
+[20-Sep-2025 13:43:51 UTC] PHP Deprecated:  urldecode(): Passing null to parameter #1 ($string) of type string is deprecated in /home/customer/www/undponeclicks.org/public_html/server.php on line 11
+[05-Nov-2025 16:19:52 UTC] PHP Deprecated:  urldecode(): Passing null to parameter #1 ($string) of type string is deprecated in /home/customer/www/undponeclicks.org/public_html/server.php on line 11
+[08-Nov-2025 13:40:11 UTC] PHP Deprecated:  urldecode(): Passing null to parameter #1 ($string) of type string is deprecated in /home/customer/www/undponeclicks.org/public_html/server.php on line 11

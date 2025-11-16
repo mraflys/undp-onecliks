@@ -1,0 +1,1251 @@
+{
+    "message": "Role Lists",
+    "data": [
+        {
+            "id": 5,
+            "role": "Admin Info Kedeputian",
+            "tipe": 2,
+            "parent_role": 2,
+            "tipe_role": 4
+        },
+        {
+            "id": 4,
+            "role": "Admin Info Satker",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 183,
+            "role": "Admin Kawasan",
+            "tipe": 1,
+            "parent_role": 1,
+            "tipe_role": 2
+        },
+        {
+            "id": 1,
+            "role": "Admin Pusat",
+            "tipe": 1,
+            "parent_role": 1,
+            "tipe_role": 1
+        },
+        {
+            "id": 2,
+            "role": "Admin Satker",
+            "tipe": 1,
+            "parent_role": 1,
+            "tipe_role": 2
+        },
+        {
+            "id": 193,
+            "role": "Admin Utama Lawas",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 207,
+            "role": "Auditor E-Kinerja",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 305,
+            "role": "Auditor ELSA",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 148,
+            "role": "Bendahara Pengeluaran",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 72,
+            "role": "Bendahara Pengeluaran",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 73,
+            "role": "Bendahara Pengeluaran Pembantu",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 155,
+            "role": "Bendahara Satker ELSA",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 170,
+            "role": "Juri LKIR",
+            "tipe": 2,
+            "parent_role": 2,
+            "tipe_role": 3
+        },
+        {
+            "id": 171,
+            "role": "Juri NYIA",
+            "tipe": 2,
+            "parent_role": 2,
+            "tipe_role": 3
+        },
+        {
+            "id": 60,
+            "role": "Kesehatan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 69,
+            "role": "Kuasa Pengguna Anggaran",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 194,
+            "role": "Manajemen Pusat Lawas",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 191,
+            "role": "Manajer Bisnis dan Inovasi",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 185,
+            "role": "Manajer E-Pelaporan - Monitoring dan Evaluasi",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 300,
+            "role": "Manajer Humas",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 203,
+            "role": "Manajer Humas Kawasan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 301,
+            "role": "Manajer IT",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 181,
+            "role": "Manajer Kawasan Lawas",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 187,
+            "role": "Manajer Kepegawaian",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 168,
+            "role": "Mentor LKIR",
+            "tipe": 2,
+            "parent_role": 2,
+            "tipe_role": 3
+        },
+        {
+            "id": 169,
+            "role": "Mentor NYIA",
+            "tipe": 2,
+            "parent_role": 2,
+            "tipe_role": 3
+        },
+        {
+            "id": 38,
+            "role": "Modul Admin Blog",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 43,
+            "role": "Modul Admin Forum",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 208,
+            "role": "Modul Aset BMN",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 103,
+            "role": "Modul BAI",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 160,
+            "role": "Modul Baksos",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 61,
+            "role": "Modul Bantuan Teknis",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 67,
+            "role": "Modul Berkas Digital",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 172,
+            "role": "Modul E-Checking Kerjasama",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 134,
+            "role": "Modul E-Kinerja",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 140,
+            "role": "Modul E-Kinerja",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 131,
+            "role": "Modul E-Pelaporan",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 304,
+            "role": "Modul Gaji",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 202,
+            "role": "Modul Insentif",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 75,
+            "role": "Modul ISSN",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 85,
+            "role": "Modul Katalog",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 81,
+            "role": "Modul Kegiatan Pusat",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 83,
+            "role": "Modul Kegiatan Satker",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 93,
+            "role": "Modul Kinerja Lembaga Pusat",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 95,
+            "role": "Modul Kinerja Lembaga Satker",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 126,
+            "role": "Modul KIP Pusat",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 128,
+            "role": "Modul KIP Satker",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 163,
+            "role": "Modul Kompetisi",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 109,
+            "role": "Modul Layanan Internal",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 175,
+            "role": "Modul Layanan Kawasan",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 150,
+            "role": "Modul Layanan Sains (ELSA)",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 91,
+            "role": "Modul Penerbitan",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 105,
+            "role": "Modul Pengaduan Pusat",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 144,
+            "role": "Modul Perjadin",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 54,
+            "role": "Modul Persediaan",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 204,
+            "role": "Modul PPID",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 99,
+            "role": "Modul Program Pusat",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 101,
+            "role": "Modul Program Satker",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 77,
+            "role": "Modul Publikasi Pusat",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 79,
+            "role": "Modul Publikasi Satker",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 87,
+            "role": "Modul Repositori",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 64,
+            "role": "Modul SILAKU",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 123,
+            "role": "Modul Sipadu",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 89,
+            "role": "Modul Tesis",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 12,
+            "role": "Modul TNDE",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 97,
+            "role": "Modul WBS",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 11,
+            "role": "Modul Website",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 166,
+            "role": "Panitia LKIR",
+            "tipe": 2,
+            "parent_role": 2,
+            "tipe_role": 3
+        },
+        {
+            "id": 167,
+            "role": "Panitia NYIA",
+            "tipe": 2,
+            "parent_role": 2,
+            "tipe_role": 3
+        },
+        {
+            "id": 120,
+            "role": "Pejabat Pembuat Komitmen",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 70,
+            "role": "Pejabat Pembuat Komitmen",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 147,
+            "role": "Pejabat Pembuat Komitmen",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 59,
+            "role": "Pejabat Pengadaan Persediaan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 180,
+            "role": "Pelaksana Kawasan Lawas",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 178,
+            "role": "Pelaksana Layanan Utama",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 177,
+            "role": "Pelaksana Pusat Lawas",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 156,
+            "role": "Pelaksana Satker ELSA",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 159,
+            "role": "Pembimbing Satker ELSA",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 192,
+            "role": "Pengelola Bisnis dan Inovasi Kawasan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 182,
+            "role": "Pengelola Dokumentasi Lawas",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 46,
+            "role": "Pengelola Forum Kedeputian",
+            "tipe": 2,
+            "parent_role": 2,
+            "tipe_role": 4
+        },
+        {
+            "id": 45,
+            "role": "Pengelola Forum Satker",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 206,
+            "role": "Pengelola Gaji",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 57,
+            "role": "Pengelola Gudang Persediaan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 302,
+            "role": "Pengelola Humas Kawasan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 303,
+            "role": "Pengelola IT Kawasan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 74,
+            "role": "Pengelola Kegiatan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 142,
+            "role": "Pengelola Kepegawaian E-Kinerja",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 188,
+            "role": "Pengelola Kepegawaian Kawasan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 152,
+            "role": "Pengelola Layanan Pusat ELSA",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 153,
+            "role": "Pengelola Layanan Satker ELSA",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 106,
+            "role": "Pengelola Pengaduan Pusat",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 196,
+            "role": "Pengelola PPID Kawasan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 197,
+            "role": "Pengelola PPID Khusus Satker",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 104,
+            "role": "Pengelola Pusat BAI",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 62,
+            "role": "Pengelola Pusat Bantuan Teknis",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 68,
+            "role": "Pengelola Pusat Berkas Digital",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 173,
+            "role": "Pengelola Pusat E-Checking Kerjasama",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 149,
+            "role": "Pengelola Pusat E-Kinerja",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 184,
+            "role": "Pengelola Pusat E-Pelaporan",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 44,
+            "role": "Pengelola Pusat Forum",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 201,
+            "role": "Pengelola Pusat Insentif",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 76,
+            "role": "Pengelola Pusat ISSN",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 86,
+            "role": "Pengelola Pusat Katalog",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 82,
+            "role": "Pengelola Pusat Kegiatan",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 65,
+            "role": "Pengelola Pusat Keuangan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 2
+        },
+        {
+            "id": 94,
+            "role": "Pengelola Pusat Kinerja Lembaga",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 127,
+            "role": "Pengelola Pusat KIP",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 165,
+            "role": "Pengelola Pusat Kompetisi",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 190,
+            "role": "Pengelola Pusat Lawas",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 162,
+            "role": "Pengelola Pusat Layanan Baksos",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 110,
+            "role": "Pengelola Pusat Layanan Internal",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 92,
+            "role": "Pengelola Pusat Penerbitan",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 145,
+            "role": "Pengelola Pusat Perjadin",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 195,
+            "role": "Pengelola Pusat PPID",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 100,
+            "role": "Pengelola Pusat Program",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 78,
+            "role": "Pengelola Pusat Publikasi",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 88,
+            "role": "Pengelola Pusat Repositori",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 124,
+            "role": "Pengelola Pusat Sipadu",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 90,
+            "role": "Pengelola Pusat Tesis",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 7,
+            "role": "Pengelola Pusat TNDE",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 98,
+            "role": "Pengelola Pusat WBS",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 3,
+            "role": "Pengelola Pusat Website",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 158,
+            "role": "Pengelola Sampel Satker ELSA",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 107,
+            "role": "Pengelola Satker Berkas Digital",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 174,
+            "role": "Pengelola Satker E-Checking Kerjasama",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 136,
+            "role": "Pengelola Satker E-Kinerja",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 84,
+            "role": "Pengelola Satker Kegiatan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 96,
+            "role": "Pengelola Satker Kinerja Lembaga",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 129,
+            "role": "Pengelola Satker KIP",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 102,
+            "role": "Pengelola Satker Program",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 80,
+            "role": "Pengelola Satker Publikasi",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 125,
+            "role": "Pengelola Satker Sipadu",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 8,
+            "role": "Pengelola Satker TNDE",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 157,
+            "role": "Penyelia Satker ELSA",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 115,
+            "role": "Petugas Penelaah Peminjaman Arsip LIPI",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 114,
+            "role": "Petugas Penelaah Peminjaman Kendaraan Dinas",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 113,
+            "role": "Petugas Penelaah Peminjaman Ruangan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 119,
+            "role": "Petugas Penelaah Peminjaman Ruangan PNBP",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 116,
+            "role": "Petugas Penelaah Pengurusan Passport",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 117,
+            "role": "Petugas Penelaah Usulan Pengadaan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 122,
+            "role": "Petugas Validasi Kendaraan Dinas",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 121,
+            "role": "Petugas Validasi Pengadaan ",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 130,
+            "role": "Petugas Viewer Pokja",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 306,
+            "role": "Pimpinan ELSA",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 186,
+            "role": "PJ Monev Satker",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 189,
+            "role": "PME Kedeputian",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 154,
+            "role": "PME Satker ELSA",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 143,
+            "role": "PME Satuan Kerja",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 133,
+            "role": "PME Satuan Kerja",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 71,
+            "role": "PPSPM",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 212,
+            "role": "Role Intra V3",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 224,
+            "role": "Role Intra V3",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 225,
+            "role": "Role Intra V3",
+            "tipe": 2,
+            "parent_role": 0,
+            "tipe_role": 0
+        },
+        {
+            "id": 223,
+            "role": "Role Intra V3 (Not Parent) ",
+            "tipe": 1,
+            "parent_role": 2,
+            "tipe_role": 4
+        },
+        {
+            "id": 63,
+            "role": "Service Desk Bantuan Teknis",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 179,
+            "role": "Service Desk Lawas",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 111,
+            "role": "Service Desk Pusat",
+            "tipe": 2,
+            "parent_role": 2,
+            "tipe_role": 3
+        },
+        {
+            "id": 112,
+            "role": "Service Desk Satker",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 205,
+            "role": "Superadmin",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 161,
+            "role": "Super Admin Baksos",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 39,
+            "role": "Super Admin Blog",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 135,
+            "role": "Super Admin E-Kinerja",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 141,
+            "role": "Super Admin E-Kinerja",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 151,
+            "role": "Super Admin ELSA",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 132,
+            "role": "Super Admin E-Pelaporan",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 108,
+            "role": "Super Admin Keuangan",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 164,
+            "role": "Super Admin Kompetisi",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 176,
+            "role": "Super Admin Lawas",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 1
+        },
+        {
+            "id": 118,
+            "role": "Super Admin Layanan Internal",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 146,
+            "role": "Super Admin Perjadin",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 198,
+            "role": "Super Admin PPID",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 6,
+            "role": "Super Admin Website",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 137,
+            "role": "Unit Kearsipan",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 56,
+            "role": "User Request Persediaan",
+            "tipe": 2,
+            "parent_role": 3,
+            "tipe_role": 4
+        },
+        {
+            "id": 199,
+            "role": "Verifikator Administratif Insentif",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 55,
+            "role": "Verifikator Persediaan",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        },
+        {
+            "id": 200,
+            "role": "Verifikator Substansi Insentif",
+            "tipe": 2,
+            "parent_role": 1,
+            "tipe_role": 3
+        }
+    ]
+}
