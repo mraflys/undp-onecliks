@@ -101,7 +101,6 @@ class UserController extends Controller
       $input['updated_by'] = \Auth::user()->user_name;
       if (!empty($req->password))
         $input['user_password'] = sha1($req->password);
-
       DB::table($this->table)->where('id_user', $id)->update($input);
       Cache::forget('sec_users');
       return \Redirect::route('users.edit', [$id])->with('message_success', 'Data has been saved successfully!');
@@ -138,6 +137,7 @@ class UserController extends Controller
     $input['id_country'] = $req->id_country;
     $input['is_internal_user'] = $req->is_internal_user;
     $input['is_using_LDAP'] = $req->is_using_LDAP;
+    $input['external_fee_percentage'] = $req->external_fee_percentage;
     $input['is_active'] = $req->is_active;
     
     return $input;
