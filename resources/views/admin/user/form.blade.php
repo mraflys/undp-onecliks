@@ -26,6 +26,7 @@
       $is_using_LDAP = $detail->is_using_LDAP;
       $is_internal_user = $detail->is_internal_user;
       $is_active = $detail->is_active;
+      $external_fee_percentage = $detail->is_internal_user == 1 ? null : $detail->external_fee_percentage ?? null;
       $default_agency = \App\AgencyUnit::find($id_agency_unit);
     }else{
       $url = route('users.store');
@@ -42,6 +43,7 @@
       $is_internal_user = 0;
       $is_using_LDAP = 0;
       $is_active = 1;
+      $external_fee_percentage = null;
       $default_agency = \App\AgencyUnit::where('id_country', $id_country)->first();
     }
   ?>
@@ -103,14 +105,19 @@
       <div class="form-group">
         <label>Is Internal User ?</label>
         <br>
-        <input type="radio" name="is_internal_user" value="1" <?=($is_internal_user == 1) ? 'checked' : '';?>> Yes &nbsp;
-        <input type="radio" name="is_internal_user" value="0" <?=($is_internal_user == 0) ? 'checked' : '';?>> No &nbsp;
+        <input type="radio" name="is_internal_user" value="1" <?=($is_internal_user == 1) ? 'checked' : '';?> onchange="toggleExternalFeeField()"> Yes &nbsp;
+        <input type="radio" name="is_internal_user" value="0" <?=($is_internal_user == 0) ? 'checked' : '';?> onchange="toggleExternalFeeField()"> No &nbsp;
       </div>
       <div class="form-group">
         <label>Is Active ?</label>
         <br>
         <input type="radio" name="is_active" value="1" <?=($is_active == 1) ? 'checked' : '';?>> Yes &nbsp;
         <input type="radio" name="is_active" value="0" <?=($is_active == 0) ? 'checked' : '';?>> No &nbsp;
+      </div>
+      <div class="form-group" id="external_fee_field" style="display: <?=($is_internal_user == 0) ? 'block' : 'none';?>">
+        <label>External Fee Percentage <span class="text-danger" id="external_fee_required" style="display: <?=($is_internal_user == 0) ? 'inline' : 'none';?>">*</span></label>
+        <input type="number" name="external_fee_percentage" id="external_fee_percentage" class="form-control" value="<?=(!empty(old('external_fee_percentage'))) ? old('external_fee_percentage') : $external_fee_percentage ;?>" placeholder="Enter External Fee Percentage" step="0.01" min="0" max="100" <?=($is_internal_user == 0) ? 'required' : '';?>>
+        <span class="form-text text-muted">External fee percentage (0-100%).</span>
       </div>
     </div>
     <div class="kt-portlet__foot">
@@ -154,6 +161,26 @@
     })
   }
 
+  function toggleExternalFeeField() {
+    var isInternal = $('input[name="is_internal_user"]:checked').val();
+    var externalFeeField = $('#external_fee_field');
+    var externalFeeInput = $('#external_fee_percentage');
+    var requiredLabel = $('#external_fee_required');
+    
+    if (isInternal == '0') {
+      // External user - show field and make it required
+      externalFeeField.show();
+      externalFeeInput.prop('required', true);
+      requiredLabel.show();
+    } else {
+      // Internal user - hide field, remove required, and set value to null
+      externalFeeField.hide();
+      externalFeeInput.prop('required', false);
+      externalFeeInput.val(''); // Set to empty string (equivalent to null)
+      requiredLabel.hide();
+    }
+  }
+
   $(function(){
     agencyList(<?=$id_country;?>);
     
@@ -164,6 +191,9 @@
     $('#agency_unit').change(function(){
       serviceList($("#country").val(), $("#agency_unit").val());
     })
+    
+    // Initialize external fee field visibility on page load
+    toggleExternalFeeField();
   })
 </script>
 @endsection
