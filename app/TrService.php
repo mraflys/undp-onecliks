@@ -35,11 +35,45 @@ class TrService extends Model
         return $idservice;
     }
 
-    public static function get_ticket_number_by_country_id($country_id)
+    public static function get_ticket_number_by_country_id($country_id, $maxRetries = 3)
     {
-        $country_code = Country::find($country_id)->country_code;
-        $counter      = Country::get_last_sequence_by_code($country_code);
-        return "T" . strtoupper($country_code) . str_pad($counter, 10, "0", STR_PAD_LEFT);
+        $attempt = 0;
+
+        do {
+            $attempt++;
+
+            try {
+                $country_code     = Country::find($country_id)->country_code;
+                $counter          = Country::get_last_sequence_by_code($country_code);
+                $transaction_code = "T" . strtoupper($country_code) . str_pad($counter, 10, "0", STR_PAD_LEFT);
+
+                // Double check uniqueness to prevent extreme race conditions
+                $exists = self::where('transaction_code', $transaction_code)->exists();
+
+                if (! $exists) {
+                    return $transaction_code;
+                }
+
+                // Log duplicate attempt for monitoring
+                \Log::warning("Duplicate transaction code detected: {$transaction_code}, attempt: {$attempt}");
+
+            } catch (\Exception $e) {
+                \Log::error("Error generating transaction code: " . $e->getMessage());
+
+                if ($attempt >= $maxRetries) {
+                    throw new \Exception("Failed to generate unique transaction code after {$maxRetries} attempts: " . $e->getMessage());
+                }
+            }
+
+            // Wait before retry with exponential backoff + random jitter
+            if ($attempt < $maxRetries) {
+                $waitTime = pow(2, $attempt - 1) * 100000; // 100ms, 200ms, 400ms
+                usleep($waitTime + rand(0, 100000));       // Add random jitter
+            }
+
+        } while ($attempt < $maxRetries);
+
+        throw new \Exception("Failed to generate unique transaction code after {$maxRetries} attempts");
     }
 
     public static function basic_mapping_data($custom_select = null)

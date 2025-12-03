@@ -153,11 +153,10 @@ class MemberRequestController extends Controller
         return redirect()->back();
     }
 
-    public function draft_edit($id_transaction)
+    public function draft_edit($id_draft)
     {
         $data   = $this->form_init_data();
-        $detail = DrService::find($id_transaction);
-        // dd($detail);
+        $detail = DrService::find($id_draft);
         if (is_null($detail)) {
             Session::flash('message_error', 'Data has been deleted');
             return redirect(route('myrequests.draft'));
@@ -277,9 +276,9 @@ class MemberRequestController extends Controller
             if (! is_null($id)) {
                 $service = ServiceList::find($id_service);
                 $agency  = AgencyUnit::find($req->id_agency_unit_buyer);
+
                 if ($table_type == 'tr_service') {
-                    $tr_service = TrService::find($id);
-                    // $tr_service->transaction_code = TrService::get_ticket_number_by_country_id($agency->id_country);
+                    $tr_service                    = TrService::find($id);
                     $tr_service->transaction_code  = TrService::get_ticket_number_by_country_id(1);
                     $tr_service->agency_name_buyer = \Auth::user()->agency->agency_unit_name;
                     $tr_service->agency_code_buyer = \Auth::user()->agency->agency_unit_code;
@@ -291,7 +290,6 @@ class MemberRequestController extends Controller
                 $tr_service->user_name_buyer   = \Auth::user()->user_name;
                 $tr_service->person_name_buyer = \Auth::user()->person_name;
                 $tr_service->save();
-
                 /*-- store workflows --*/
                 $this->store_workflows($req, $tr_service, $id, $table_type);
                 $this->store_coa($req, $id, $table_type);
@@ -316,7 +314,9 @@ class MemberRequestController extends Controller
                     $rowdr->save();
                 }
             }
+
             DB::commit();
+
             if ($table_type != 'dr_service') {
                 GeneralHelper::add_log(['description' => "Create Request " . $tr_service->transaction_code, 'id_user' => \Auth::user()->id_user]);
                 $data['detail']           = TrService::find($id);
@@ -944,7 +944,7 @@ class MemberRequestController extends Controller
             'description'     => 'required',
             'service_price'   => 'required',
             'payment_method'  => 'required',
-            'all_notif_email' => 'required',
+            // 'all_notif_email' => 'required',
         ];
 
         if (is_null($id)) {

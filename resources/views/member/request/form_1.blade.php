@@ -28,7 +28,6 @@
             
                 $id_service = $detail->id_service;
                 $id_agency_unit_service = $detail->id_agency_unit_service;
-            
                 if (empty($id_agency_unit_service) && !empty($id_service)) {
                     $id_agency_unit_service = \App\ServiceList::find($id_service)->id_agency_unit;
                 }
@@ -44,7 +43,7 @@
                 $id_project = $detail->id_project;
                 $date_transaction = $detail->date_transaction;
                 $payment_method = $detail->payment_method;
-                $all_notif_email = $detail->all_notif_email;
+                // $all_notif_email = $detail->all_notif_email;
                 $currency_code = $detail->currency_name;
             } else {
                 $url = route('myrequests.store');
@@ -908,23 +907,66 @@
                                         isRequired = "class='required-field'";
                                     }
 
+                                    // Check if there's existing document data for this workflow doc
+                                    var existingDocHtml = "";
+                                    var existingDocDisplayHtml = "";
+                                    <?php if ($has_detail): ?>
+                                    <?php 
+                                        // Get existing documents - use appropriate method based on detail type
+                                        $service_docs = isset($detail->id_draft) ? $detail->required_docs_new($detail->id_draft) : $detail->required_docs();
+                                        
+                                        if (!is_null($service_docs) && count($service_docs) > 0): 
+                                            foreach ($service_docs as $value): 
+                                                // Determine document properties based on mode
+                                                $doc_id = isset($detail->id_draft) ? $value->id_workflow : $value->id_service_workflow_doc;
+                                                $doc_path = isset($detail->id_draft) ? $value->doc_name : $value->document_path;
+                                                $delete_route = isset($detail->id_draft) ? 'myservices.delete_temporary_doc_draft' : 'myservices.delete_temporary_doc';
+                                                $delete_param = isset($detail->id_draft) ? $value->id_draft_doc : $value->id_transaction_workflow_doc;
+                                        ?>
+                                    if (v.id_service_workflow_doc == <?= $doc_id ?>) {
+                                        <?php if (!empty($doc_path)): ?>
+                                        existingDocHtml =
+                                            '<a href="<?= asset($doc_path) ?>" target="_blank"><i class="fa fa-download"></i></a>';
+                                        existingDocHtml +=
+                                            '&ensp; <a class="btn bg-danger text-light" href="<?= route($delete_route, ['id_transaction_workflow_doc' => $delete_param]) ?>">X</a>';
+                                        existingDocDisplayHtml =
+                                            'Uploaded: <?= basename($doc_path) ?>';
+                                        <?php endif; ?>
+                                    }
+                                    <?php 
+                                            endforeach;
+                                        endif; 
+                                        ?>
+                                    <?php endif; ?>
+
                                     htmlDoc += "<tr><td>" + count + "</td><td>" + v
                                         .document_name + isMandatory + "</td>";
                                     htmlDoc += "<td>" + v.description +
                                         "</td><td id='doc_" + v
-                                        .id_service_workflow_doc +
-                                        "'><input type='file' id='doc_id_" + v
-                                        .id_service_workflow_doc +
-                                        "' name='required_docs[" + v
-                                        .id_service_workflow_doc + "]' " + isRequired +
-                                        " onchange='getDataArrdocs(" + v
-                                        .id_service_workflow_doc +
-                                        ",this,this.id)'></td>";
+                                        .id_service_workflow_doc + "'>";
+
+                                    // Use existing document HTML if available, otherwise show file input
+                                    if (existingDocHtml != "") {
+                                        htmlDoc += existingDocHtml;
+                                    } else {
+                                        htmlDoc += "<input type='file' id='doc_id_" + v
+                                            .id_service_workflow_doc +
+                                            "' name='required_docs[" + v
+                                            .id_service_workflow_doc + "]' " +
+                                            isRequired +
+                                            " onchange='getDataArrdocs(" + v
+                                            .id_service_workflow_doc +
+                                            ",this,this.id)'>";
+                                    }
+                                    htmlDoc += "</td>";
+
                                     htmlDoc2 += "<tr><td>" + count + "</td><td>" + v
                                         .document_name + isMandatory + "</td>";
                                     htmlDoc2 += "<td>" + v.description +
                                         "</td><td id='valuedocs_" + v
-                                        .id_service_workflow_doc + "'></td>";
+                                        .id_service_workflow_doc + "'>" +
+                                        (existingDocDisplayHtml != "" ?
+                                            existingDocDisplayHtml : "") + "</td>";
                                     count++;
                                 });
 
@@ -948,6 +990,26 @@
                                             " <span class='text-danger'>*</span>";
                                         isRequired = "class='required-field'";
                                     }
+
+                                    // Check if there's existing info data for this workflow info
+                                    var existingInfoValue = "";
+                                    <?php if ($has_detail): ?>
+                                    <?php 
+                                        $service_infos = $detail->required_infos();
+                                        if (!is_null($service_infos) && count($service_infos) > 0): 
+                                            foreach ($service_infos as $value): 
+                                        ?>
+                                    if (v.id_service_workflow_info ==
+                                        <?= $value->id_service_workflow_info ?>) {
+                                        existingInfoValue =
+                                            "<?= addslashes($value->info_value) ?>";
+                                    }
+                                    <?php 
+                                            endforeach;
+                                        endif; 
+                                        ?>
+                                    <?php endif; ?>
+
                                     htmlInfo += "<tr><td>" + count + "</td><td>" + v
                                         .info_title + isMandatory + "</td>";
                                     htmlInfo += "<td>" + v.description +
@@ -955,6 +1017,7 @@
                                         v.id_service_workflow_info + "]' " +
                                         isRequired + " id='info_" + v
                                         .id_service_workflow_info +
+                                        "' value='" + existingInfoValue +
                                         "' onchange='getDataArrinfo(" + v
                                         .id_service_workflow_info +
                                         ", this.value)'></td>";
@@ -962,7 +1025,8 @@
                                         .info_title + isMandatory + "</td>";
                                     htmlInfo2 += "<td>" + v.description +
                                         "</td><td id='valueinfo_" + v
-                                        .id_service_workflow_info + "'></td>";
+                                        .id_service_workflow_info + "'>" +
+                                        existingInfoValue + "</td>";
                                     count++;
                                 });
                                 htmlInfo += "</table>";
@@ -1116,66 +1180,19 @@
                     $("#id_service, #qty").trigger("change");
                     $("#supervisor_mail").trigger("keyup");
                     setTimeout(function() {
+                        // Handle non-atlas COA files for draft mode only
                         <?php
-                        if ($has_detail) {
-                            if (isset($detail->id_draft)) {
-                                $service_docs = $detail->required_docs_new($detail->id_draft);
-                        
-                                if ($payment_method == 'non_atlas') {
-                                    $service_coa_other_docs = $detail->required_coa_docs($detail->id_draft);
-                                    if (!is_null($service_coa_other_docs) && count($service_coa_other_docs) > 0) {
-                                        foreach ($service_coa_other_docs as $value_coa) {
-                                            if ($value_coa->file_path != '') {
-                                                $url_coa_other_doc = '<a href=' . asset($value_coa->file_path) . ' target="_blank"><i class="fa fa-download"></i></a>';
-                                                $url_coa_other_doc .= '&ensp; <a class="btn bg-danger text-light" href=' . route('myservices.delete_temporary_doc_draft_coa_other', ['id_workflow_doc_coa_other' => $value_coa->id_transaction_coa_other]) . '>X</a>';
-                                                echo "$('#non_atlas_files_" . $value_coa->ulo . '_' . $value_coa->arn . '_' . $value_coa->project_no . "').html('" . $url_coa_other_doc . "');";
-                                            } else {
-                                                $url_coa_other_doc = '<input type="file" name="non_atlas_files[]" style="width: 95px">';
-                                                echo "$('#non_atlas_files_" . $value_coa->ulo . '_' . $value_coa->arn . '_' . $value_coa->project_no . "').html('" . $url_coa_other_doc . "');";
-                                            }
-                                        }
-                                    }
-                                }
-                                if (!is_null($service_docs) && count($service_docs) > 0) {
-                                    foreach ($service_docs as $value) {
-                                        if ($value->workflowDoc->doc_name != '') {
-                                            $url_doc = '<a href=' . asset($value->workflowDoc->doc_name) . ' target="_blank"><i class="fa fa-download"></i></a>';
-                                            $url_doc .= '&ensp; <a class="btn bg-danger text-light" href=' . route('myservices.delete_temporary_doc_draft', ['id_transaction_workflow_doc' => $value->workflowDoc->id_draft_doc]) . '>X</a>';
-                                            // dd("$('#doc_".$value->id_workflow."').html('".$url_doc."');");
-                                            echo "$('#doc_" . $value->workflowDoc->id_workflow . "').html('" . $url_doc . "');";
-                                        } else {
-                                            $isRequired = null;
-                                            if ($value->is_mandatory == 1) {
-                                                $isRequired = 'class="required-field"';
-                                            }
-                                            $url_doc = '<input type="file" id="doc_id_' . $value->workflowDoc->id_service_workflow_doc . '" name="required_docs[' . $value->workflowDoc->id_service_workflow_doc . ']" ' . $isRequired . '>';
-                                            echo "$('#doc_" . $value->workflowDoc->id_service_workflow_doc . "').html('" . $url_doc . "');";
-                                        }
-                                    }
-                                }
-                            } else {
-                                $service_infos = $detail->required_infos();
-                                $service_docs = $detail->required_docs();
-                        
-                                if (!is_null($service_infos) && count($service_infos) > 0) {
-                                    foreach ($service_infos as $value) {
-                                        echo "$('#info_" . $value->id_service_workflow_info . "').val('" . $value->info_value . "');\n";
-                                    }
-                                }
-                                if (!is_null($service_docs) && count($service_docs) > 0) {
-                                    foreach ($service_docs as $value) {
-                                        if ($value->document_path != '' || $value->document_path !== '') {
-                                            $url_doc = '<a href=' . asset($value->document_path) . ' target="_blank"><i class="fa fa-download"></i></a>';
-                                            $url_doc .= '&ensp; <a class="btn bg-danger text-light" href=' . route('myservices.delete_temporary_doc', ['id_transaction_workflow_doc' => $value->id_transaction_workflow_doc]) . '>X</a>';
-                                            echo "$('#doc_" . $value->id_service_workflow_doc . "').html('" . $url_doc . "');";
-                                        } else {
-                                            $isRequired = null;
-                                            if ($value->is_mandatory == 1) {
-                                                $isRequired = 'class="required-field"';
-                                            }
-                                            $url_doc = '<input type="file" id="doc_id_' . $value->id_service_workflow_doc . '" name="required_docs[' . $value->id_service_workflow_doc . ']" ' . $isRequired . '>';
-                                            echo "$('#doc_" . $value->id_service_workflow_doc . "').html('" . $url_doc . "');";
-                                        }
+                        if ($has_detail && isset($detail->id_draft) && $payment_method == 'non_atlas') {
+                            $service_coa_other_docs = $detail->required_coa_docs($detail->id_draft);
+                            if (!is_null($service_coa_other_docs) && count($service_coa_other_docs) > 0) {
+                                foreach ($service_coa_other_docs as $value_coa) {
+                                    if ($value_coa->file_path != '') {
+                                        $url_coa_other_doc = '<a href=' . asset($value_coa->file_path) . ' target="_blank"><i class="fa fa-download"></i></a>';
+                                        $url_coa_other_doc .= '&ensp; <a class="btn bg-danger text-light" href=' . route('myservices.delete_temporary_doc_draft_coa_other', ['id_workflow_doc_coa_other' => $value_coa->id_transaction_coa_other]) . '>X</a>';
+                                        echo "$('#non_atlas_files_" . $value_coa->ulo . '_' . $value_coa->arn . '_' . $value_coa->project_no . "').html('" . $url_coa_other_doc . "');";
+                                    } else {
+                                        $url_coa_other_doc = '<input type="file" name="non_atlas_files[]" style="width: 95px">';
+                                        echo "$('#non_atlas_files_" . $value_coa->ulo . '_' . $value_coa->arn . '_' . $value_coa->project_no . "').html('" . $url_coa_other_doc . "');";
                                     }
                                 }
                             }
