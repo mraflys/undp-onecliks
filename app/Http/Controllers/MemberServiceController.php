@@ -87,7 +87,6 @@ class MemberServiceController extends Controller
             $data['infos']       = $detail->required_infos();
             $data['workflows']   = $detail->service_workflows();
             GeneralHelper::add_log(['description' => "Show Service " . $detail->transaction_code, 'id_user' => \Auth::user()->id_user]);
-            // dd($data);
             return view('member.service.show', $data);
         } catch (\Exception $e) {
             return redirect()->back();
@@ -117,7 +116,7 @@ class MemberServiceController extends Controller
             $data['breadcrumps'] = ['Member Area', $data['title']];
             $data['docs']        = $detail->required_docs();
             $data['infos']       = $detail->required_infos();
-            $data['workflows']   = $detail->service_workflows();
+            $data['workflows']   = $detail->service_workflows_history();
 
             foreach ($data['docs'] as $docs) {
                 if (strpos($docs->document_path, 'assets') !== false) {
@@ -196,7 +195,6 @@ class MemberServiceController extends Controller
             $service_info_list         = ServiceList::service_info_req($parent);
             $data['service_lists']     = $service_list;
             $data['service_info_list'] = $service_info_list;
-            // dd($data['service_info_list']);
             foreach ($data['workflows'] as $workflow) {
                 $current = (! is_null($workflow->date_start_actual) && is_null($workflow->date_end_actual));
                 if ($current) {
@@ -354,12 +352,13 @@ class MemberServiceController extends Controller
                     if (! in_array($workflow->id_transaction, $trarray_finish)) {
                         array_push($trarray_finish, $workflow->id_transaction);
                     }
-                } else {
-                    if (in_array($workflow->id_transaction, $trarray_finish)) {
-                        $index = array_search($workflow->id_transaction, $trarray_finish);
-                        unset($trarray_finish[$index]);
-                    }
                 }
+                // else {
+                //     if (in_array($workflow->id_transaction, $trarray_finish)) {
+                //         $index = array_search($workflow->id_transaction, $trarray_finish);
+                //         unset($trarray_finish[$index]);
+                //     }
+                // }
             }
             $price = 0;
             foreach ($trarray_finish as $id_transaction) {
@@ -368,9 +367,7 @@ class MemberServiceController extends Controller
             }
 
             array_push($trarray_finish, $tr_service->id_transaction);
-            // dd($trarray_finish);
 
-            // dd('masuk');
             $data_final['id_status']     = 5;
             $data_final['is_finished']   = 1;
             $data_final['date_finished'] = Date('Y-m-d H:i:s');
@@ -413,14 +410,12 @@ class MemberServiceController extends Controller
         try {
             DB::beginTransaction();
             $current_id_transaction_workflow = $req->id_transaction_workflow;
-            // dd($current_id_transaction_workflow);
             $transaction_workflow = TrServiceWorkFlow::find($current_id_transaction_workflow);
             $current_workflow     = $transaction_workflow;
             $current_seq          = $transaction_workflow->sequence;
             $infos                = $req->infos;
             $tr_service           = TrService::find($id);
             $ticket_no            = $tr_service->transaction_code;
-            // dd($infos);
             // if (is_array($infos) && count($infos) > 0){
             //   foreach ($infos as $key => $value) {
             //     DB::table('tr_service_workflow_info')->where('id_transaction_workflow_info', $key)->update(['value' => $value]);
@@ -441,7 +436,6 @@ class MemberServiceController extends Controller
             $child_ids     = TrService::where('id_transaction_parent', $transaction_workflow->tr_service->id_transaction_parent)->get()->pluck('id_transaction')->toArray();
             $next_workflow = TrServiceWorkFlow::whereIn('id_transaction', $child_ids)->where('sequence', $next_seq)->first();
 
-            // dd('keluar');
             if (! is_null($next_workflow)) {
                 $current_workflow                    = $next_workflow;
                 $next_workflow                       = TrServiceWorkFlow::find($next_workflow->id_transaction_workflow);

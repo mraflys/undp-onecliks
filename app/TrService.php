@@ -270,6 +270,17 @@ class TrService extends Model
             ->where('tr_service.id_transaction', $this->id_transaction)->orderBy('sequence')->get();
     }
 
+    public function service_workflows_history()
+    {
+        return TrServiceWorkFlow::select("tr_service_workflow.*")
+            ->join("tr_service as tr_service_child", "tr_service_child.id_transaction", "=", "tr_service_workflow.id_transaction")
+            ->join("tr_service", "tr_service.id_transaction", "=", "tr_service_child.id_transaction_parent")->with('docs', 'primary_pic', 'alternate_pic')
+            ->where('tr_service.id_transaction', $this->id_transaction)
+            ->whereNotNull('tr_service_workflow.date_start_actual')
+            ->whereNotNull('tr_service_workflow.date_end_actual')
+            ->orderBy('sequence')->get();
+    }
+
     public function payments()
     {
         if ($this->payment_method == 'atlas') {
