@@ -1130,36 +1130,36 @@ class MemberRequestController extends Controller
 
     public function old_ongoing_request_search(Request $req)
     {
-        $where = "( tr.id_agency_unit_buyer=" . session('user_agency_unit_id') . " OR tr.user_name_buyer = '" . session('user_name') . "' )";
+        $where = "( id_agency_unit_buyer=" . session('user_agency_unit_id') . " OR user_name_buyer = '" . session('user_name') . "' )";
 
         $start_date = $req->start_date;
         $end_date   = $req->end_date;
 
         if (! empty($start_date)) {
             if (! empty($end_date)) {
-                $where .= " AND tr.date_transaction BETWEEN '" . $start_date . " 00:00:00' AND '" . $end_date . " 23:59:59'";
+                $where .= " AND (DATE(tr_service.date_transaction) BETWEEN '" . $start_date . "' AND '" . $end_date . "') ";
             } else {
-                $where .= " AND DATE(tr.date_transaction) = '" . $start_date . "'";
+                $where .= " AND DATE(tr_service.date_transaction) = '" . $start_date . "'";
             }
         }
 
         if ($req->is_mine == 1) {
-            $where .= " AND tr.id_user_buyer = " . session('user_id');
+            $where .= " AND tr_service.id_user_buyer = " . session('user_id');
         }
 
         if (! empty($req->status)) {
+            $reject = null;
             if ($req->status == 2) {
-                $where .= " AND tr.id_status IN (2, -1)";
-            } else {
-                $where .= " AND tr.id_status = " . $req->status;
+                $reject = "OR id_status = -1";
             }
+            $where .= " AND id_status = '" . $req->status . "' " . $reject;
         }
 
         if (! empty($req->id_service_unit)) {
-            $where .= " AND tr.id_agency_unit_service = " . $req->id_service_unit;
+            $where .= " AND id_agency_unit_service = '" . $req->id_service_unit . "'";
         }
 
-        $where .= " AND tr.date_deleted IS NULL AND tr.id_status IN (-1, 1, 2, 5, 6, 7)";
+        $where .= " AND date_deleted IS NULL";
 
         $list = RequestQuery::ongoing($where);
 
