@@ -277,7 +277,6 @@ class TrService extends Model
             ->join("tr_service", "tr_service.id_transaction", "=", "tr_service_child.id_transaction_parent")->with('docs', 'primary_pic', 'alternate_pic')
             ->where('tr_service.id_transaction', $this->id_transaction)
             ->whereNotNull('tr_service_workflow.date_start_actual')
-            ->whereNotNull('tr_service_workflow.date_end_actual')
             ->orderBy('sequence')->get();
     }
 
