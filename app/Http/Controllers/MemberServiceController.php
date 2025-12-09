@@ -347,8 +347,9 @@ class MemberServiceController extends Controller
             $child_ids     = TrService::where('id_transaction_parent', $tr_service->id_transaction)->get()->pluck('id_transaction')->toArray();
             $workflowcheck = TrServiceWorkFlow::whereIn('id_transaction', $child_ids)->get();
             $ticket_no     = $tr_service->transaction_code;
+
             foreach ($workflowcheck as $workflow) {
-                if ($workflow->date_start_actual != null && $workflow->date_end_actual != null) {
+                if ($workflow->date_start_actual != null) {
                     if (! in_array($workflow->id_transaction, $trarray_finish)) {
                         array_push($trarray_finish, $workflow->id_transaction);
                     }
@@ -410,12 +411,12 @@ class MemberServiceController extends Controller
         try {
             DB::beginTransaction();
             $current_id_transaction_workflow = $req->id_transaction_workflow;
-            $transaction_workflow = TrServiceWorkFlow::find($current_id_transaction_workflow);
-            $current_workflow     = $transaction_workflow;
-            $current_seq          = $transaction_workflow->sequence;
-            $infos                = $req->infos;
-            $tr_service           = TrService::find($id);
-            $ticket_no            = $tr_service->transaction_code;
+            $transaction_workflow            = TrServiceWorkFlow::find($current_id_transaction_workflow);
+            $current_workflow                = $transaction_workflow;
+            $current_seq                     = $transaction_workflow->sequence;
+            $infos                           = $req->infos;
+            $tr_service                      = TrService::find($id);
+            $ticket_no                       = $tr_service->transaction_code;
             // if (is_array($infos) && count($infos) > 0){
             //   foreach ($infos as $key => $value) {
             //     DB::table('tr_service_workflow_info')->where('id_transaction_workflow_info', $key)->update(['value' => $value]);

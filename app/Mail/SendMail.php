@@ -1,11 +1,9 @@
 <?php
-
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendMail extends Mailable
 {
@@ -27,32 +25,35 @@ class SendMail extends Mailable
      * @return $this
      */
     public function build()
-    {   
+    {
         $subject = '';
-        if($this->data['type'] == 'request'){
-            $subject .= "[OneClick] ".$this->data['ticket']." - New Request - ";
+        if ($this->data['type'] == 'request') {
+            $subject .= "[OneClick] " . $this->data['ticket'] . " - New Request - ";
         }
-        if($this->data['type'] == 'request_user'){
-            $subject .= "[OneClick] ".$this->data['ticket']." - New Request - ";
+        if ($this->data['type'] == 'request_user') {
+            $subject .= "[OneClick] " . $this->data['ticket'] . " - New Request - ";
         }
-        if($this->data['type'] == 'reject'){
-            $subject .= "[OneClick] ".$this->data['ticket']." - Rejected - ";
+        if ($this->data['type'] == 'reject') {
+            $subject .= "[OneClick] " . $this->data['ticket'] . " - Rejected - ";
         }
-        if($this->data['type'] == 'return'){
-            $subject .= "[OneClick] ".$this->data['ticket']." - Returned - ";
+        if ($this->data['type'] == 'return') {
+            $subject .= "[OneClick] " . $this->data['ticket'] . " - Returned - ";
         }
-        if($this->data['type'] == 'confirm_to_nextflow'){
-            $subject .= "[OneClick] ".$this->data['ticket']." - Confirm To Next Workflow - ";
+        if ($this->data['type'] == 'confirm_to_nextflow') {
+            $subject .= "[OneClick] " . $this->data['ticket'] . " - Confirm To Next Workflow - ";
         }
-        if($this->data['type'] == 'confirm_to_nextflow_pic'){
-            $subject .= "[OneClick] ".$this->data['ticket']." - New Request To Confirm - ";
+        if ($this->data['type'] == 'confirm_to_nextflow_pic') {
+            $subject .= "[OneClick] " . $this->data['ticket'] . " - New Request To Confirm - ";
         }
-        if($this->data['type'] == 'assign_pic'){
-            $subject .= "[OneClick] ".$this->data['ticket']." - Confirmed - ";
+        if ($this->data['type'] == 'assign_pic') {
+            $subject .= "[OneClick] " . $this->data['ticket'] . " - Confirmed - ";
         }
-        if($this->data['type'] == 'completed'){
-            $subject .= "[OneClick] ".$this->data['ticket']." - Completed - ";
+        if ($this->data['type'] == 'completed') {
+            $subject .= "[OneClick] " . $this->data['ticket'] . " - Completed - ";
         }
-        return $this->subject($subject)->view('mail-template')->with('data', $this->data);
+        return $this->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'))
+            ->subject($subject)
+            ->view('mail-template')
+            ->with('data', $this->data);
     }
 }
