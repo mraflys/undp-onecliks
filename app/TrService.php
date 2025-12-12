@@ -295,8 +295,8 @@ class TrService extends Model
 
     public function payment_atlas_presentage()
     {
-        $arrsum = DB::select(DB::raw("SELECT sum(`percentage`) as sum_presentage FROM `tr_service_coa_atlas` WHERE `id_transaction` = $this->id_transaction"));
-        return $arrsum[0]->sum_presentage;
+        $arrsum = DB::select("SELECT sum(`percentage`) as sum_presentage FROM `tr_service_coa_atlas` WHERE `id_transaction` = ?", [$this->id_transaction]);
+        return $arrsum[0]->sum_presentage ?? 0;
     }
 
     /*-- RAW --*/
