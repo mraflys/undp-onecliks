@@ -27,16 +27,16 @@
         <div class="col-sm-6">
 
             <!-- <div class="hiddenradio">
-              <label>
-                <input type="radio" name="test" value="small" checked>
-                <img src="http://placehold.it/40x60/0bf/fff&text=A">
-              </label>
+                      <label>
+                        <input type="radio" name="test" value="small" checked>
+                        <img src="http://placehold.it/40x60/0bf/fff&text=A">
+                      </label>
 
-              <label>
-                <input type="radio" name="test" value="big">
-                <img src="http://placehold.it/40x60/b0f/fff&text=B">
-              </label>
-            </div> -->
+                      <label>
+                        <input type="radio" name="test" value="big">
+                        <img src="http://placehold.it/40x60/b0f/fff&text=B">
+                      </label>
+                    </div> -->
 
             <div id="loadingStatus"></div>
             <div class="form-group">
@@ -77,9 +77,12 @@
                 <label>Status</label>
                 <select class="form-control" id="status">
                     <option value=""></option>
+                    <option value="-1">Returned</option>
                     <option value="1">New Request</option>
                     <option value="2">On Going</option>
+                    <option value="3">Rejected</option>
                     <option value="5">Complete</option>
+                    <option value="6">Cancelled</option>
                 </select>
             </div>
             <div class="form-group">
@@ -92,26 +95,28 @@
         </div>
     </div>
 
-    <table width="100%" class="table table-striped " id="mytable">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th valign="top" field="agency_service_name" title="Order by Agency">Agency</th>
-                <th>Country</th>
-                <th>Service Unit</th>
-                <th valign="top" field="transaction_code" title="Order by Ticket">Ticket No</th>
-                <th valign="top" field="date_authorized" title="Order by Start Date">Start Date</th>
-                <th valign="top" field="person_name_buyer" title="Order by Requester">Requester</th>
-                <th valign="top" field="project_name" title="Order by Project Name">Project</th>
-                <th valign="top" field="service_name" title="Order by Service Name">Service Name</th>
-                <th valign="top" field="status_name" title="Order by Status">Status</th>
-                <th valign="top" field="workflow_name" title="Order by Current Status">Current Activity</th>
-                <th valign="top" field="delay" title="Order by Delay">Delay</th>
-                <th valign="top" field="Action" title="Action">Action</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="table-responsive">
+        <table width="100%" class="table table-striped " id="mytable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th valign="top" field="agency_service_name" title="Order by Agency">Agency</th>
+                    <th>Country</th>
+                    <th>Service Unit</th>
+                    <th valign="top" field="transaction_code" title="Order by Ticket">Ticket No</th>
+                    <th valign="top" field="date_authorized" title="Order by Start Date">Start Date</th>
+                    <th valign="top" field="person_name_buyer" title="Order by Requester">Requester</th>
+                    <th valign="top" field="project_name" title="Order by Project Name">Project</th>
+                    <th valign="top" field="service_name" title="Order by Service Name">Service Name</th>
+                    <th valign="top" field="status_name" title="Order by Status">Status</th>
+                    <th valign="top" field="workflow_name" title="Order by Current Status">Current Activity</th>
+                    <th valign="top" field="delay" title="Order by Delay">Delay</th>
+                    <th valign="top" field="Action" title="Action">Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 
     <div class="modal fade" id="ratingModal" tabindex="-1" role="dialog" aria-labelledby="formReturnLabel"
         aria-hidden="true">

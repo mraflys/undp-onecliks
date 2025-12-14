@@ -81,10 +81,10 @@ class MemberBillingController extends Controller
             $current_date = date(DATE_TIME);
             $due_date     = GeneralHelper::next_day(date(DATE_TIME), 30);
             $tr_service   = TrService::find(reset($ids));
-            // dd($req->all());
-            $amount = 0;
+            $amount       = 0;
 
             foreach ($ids as $key => $id) {
+
                 $amount += $req->prices[$key];
             }
 
