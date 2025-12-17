@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -50,6 +49,16 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        // Handle session expired (419 Page Expired)
+        if ($this->isHttpException($exception) && $exception->getStatusCode() == 419) {
+            return redirect()->route('login')->with('message_error', 'Your session has expired. Please login again.');
+        }
+
+        // Handle TokenMismatchException
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+            return redirect()->route('login')->with('message_error', 'Your session has expired. Please login again.');
+        }
+
         return parent::render($request, $exception);
     }
 }

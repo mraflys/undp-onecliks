@@ -397,7 +397,7 @@
                                             << Previous </button>
                                     </td>
                                     <td align="right">
-                                        <button type="submit" class="btn btn-warning" name="submit"
+                                        <button type="submit" class="btn btn-warning m-4" name="submit"
                                             value="dr_service"> Send to Draft </button>
                                         <?php $route_name = Route::currentRouteName(); ?>
                                         @if (

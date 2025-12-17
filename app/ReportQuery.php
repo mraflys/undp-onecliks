@@ -12,7 +12,7 @@ class ReportQuery
         FROM (SELECT id_agency_unit, agency_unit_code, agency_unit_name, id_status, status_name 
               FROM (SELECT id_agency_unit, agency_unit_code, agency_unit_name 
                     FROM ms_agency_unit 
-                    WHERE date_deleted IS NULL AND id_agency_unit IN (2,3,4,5,6)) a
+                    WHERE date_deleted IS NULL) a
               JOIN ms_status
               ORDER BY id_status
               ) ag
@@ -20,12 +20,7 @@ class ReportQuery
           ( SELECT tr.id_transaction, tr.id_status, tr.id_agency_unit_service, tr.transaction_code, SUM(io.info_value) AS value
             FROM (SELECT * 
                   FROM tr_service 
-                  WHERE ((id_agency_unit_service = 2 AND service_name LIKE '%recruitment%') OR
-                         (id_agency_unit_service = 3 AND service_name LIKE '%helpdesk problem solving%') OR
-                         (id_agency_unit_service = 4 AND service_name LIKE '%payment%') OR
-                         (id_agency_unit_service = 5 AND service_name LIKE '%individual consultant%') OR
-                         (id_agency_unit_service = 6 AND service_name LIKE '%travel%')) AND
-                        date_deleted IS NULL AND
+                  WHERE date_deleted IS NULL AND
                         id_transaction_parent IS NULL AND $where
                   ) tr
             JOIN (SELECT * FROM tr_service WHERE date_deleted IS NULL AND id_transaction_parent IS NOT NULL) gr ON gr.id_transaction_parent=tr.id_transaction
