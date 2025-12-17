@@ -69,59 +69,117 @@ class MemberReportController extends Controller
         return ReportQuery::critical($where);
     }
 
-    public function get_formatted_critical_data($results)
+    public function get_formatted_critical_data($results, $page = 1, $per_page = 5)
     {
-        $label[2]        = "recruitment";
-        $label[3]        = "helpdesk problem solving";
-        $label[4]        = "payment";
-        $label[5]        = "individual consultant";
-        $label[6]        = "travel";
+        $label           = [];
         $categories      = [];
+        $categories_all  = [];
         $table           = [];
-        $total_by_agency = [2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0];
+        $total_by_agency = [];
 
-        if (! is_null($results) & count($results) > 0) {
-            $i = 0;
+        // Define required statuses that must appear in the chart
+        $required_statuses = ['Completed', 'On-going', 'Cancelled', 'Rejected', 'Returned', 'New Request'];
+
+        if (! is_null($results) && count($results) > 0) {
+            // Build dynamic labels and initialize totals from results
+            foreach ($results as $g) {
+                if (! isset($label[$g->id_agency_unit])) {
+                    $label[$g->id_agency_unit]           = strtolower($g->agency_unit_name);
+                    $total_by_agency[$g->id_agency_unit] = 0;
+                }
+            }
+
+            // Initialize all required statuses with zero values for all agencies
+            foreach ($required_statuses as $status) {
+                foreach (array_keys($label) as $agency_id) {
+                    $val[$status][$agency_id]["x"]     = 0;
+                    $val[$status][$agency_id]["val"]   = 0;
+                    $val[$status][$agency_id]["total"] = 0;
+                }
+            }
+
+            // Populate actual data from results
             foreach ($results as $g) {
                 $total_by_agency[$g->id_agency_unit] += $g->cnt;
                 $val[$g->status_name][$g->id_agency_unit]["x"]   = $g->cnt;
                 $val[$g->status_name][$g->id_agency_unit]["val"] = $g->value;
-                $categories[$g->id_agency_unit]                  = "'" . $g->agency_unit_code . "<br/>( " . $label[$g->id_agency_unit] . " )'";
+                $categories_all[$g->id_agency_unit]              = "\"" . $g->agency_unit_code . "<br/>( " . $label[$g->id_agency_unit] . " )\"";
 
                 if ($g->status_name != "Input Feedback") {
                     $table[$g->status_name][$g->agency_unit_code] = $g->value;
                 }
-
             }
 
+            // Update totals for all statuses
             foreach ($total_by_agency as $key => $agency) {
-                foreach ($val as $keyval => $value) {
-                    $val[$keyval][$key]["total"] = $agency;
+                foreach ($required_statuses as $status) {
+                    if (isset($val[$status][$key])) {
+                        $val[$status][$key]["total"] = $agency;
+                    }
                 }
             }
 
-            // dd($total_by_agency,$val);
-            foreach ($val as $st => $v) {
+            // Pagination logic
+            $agency_ids         = array_keys($label);
+            $total_agencies     = count($agency_ids);
+            $total_pages        = ceil($total_agencies / $per_page);
+            $page               = max(1, min($page, $total_pages)); // Ensure page is within valid range
+            $offset             = ($page - 1) * $per_page;
+            $paginated_agencies = array_slice($agency_ids, $offset, $per_page);
+
+            // Format data for Highcharts (paginated)
+            foreach ($required_statuses as $st) {
                 $value[$st]["name"] = $st;
-                $value[$st]["name"] = $st;
-                unset($d);
-                foreach ($v as $k => $x) {
-                    $d[] = "{'y': {$x["x"]}, 'val' : {$x["val"]}, 'total' : {$x["total"]} }";
+                $d                  = [];
+                if (isset($val[$st])) {
+                    foreach ($paginated_agencies as $agency_id) {
+                        if (isset($val[$st][$agency_id])) {
+                            $x   = $val[$st][$agency_id];
+                            $d[] = "{'y': {$x["x"]}, 'val' : {$x["val"]}, 'total' : {$x["total"]} }";
+                        }
+                    }
                 }
                 $value[$st]["data"] = $d;
+            }
+
+            // Get paginated categories
+            foreach ($paginated_agencies as $agency_id) {
+                if (isset($categories_all[$agency_id])) {
+                    $categories[] = $categories_all[$agency_id];
+                }
             }
 
             $data["categories"] = implode(", ", $categories);
             $data["value"]      = $value;
             $data["table"]      = $table;
+            $data["pagination"] = [
+                'current_page' => $page,
+                'total_pages'  => $total_pages,
+                'per_page'     => $per_page,
+                'total_items'  => $total_agencies,
+            ];
 
         } else {
-            $data['categories'] = $data['value'] = [];
+            // Empty data fallback
+            $value = [];
+            foreach ($required_statuses as $status) {
+                $value[$status]["name"] = $status;
+                $value[$status]["data"] = [];
+            }
+            $data['categories'] = '';
+            $data['value']      = $value;
+            $data['table']      = [];
+            $data['pagination'] = [
+                'current_page' => 1,
+                'total_pages'  => 1,
+                'per_page'     => $per_page,
+                'total_items'  => 0,
+            ];
         }
         return $data;
     }
 
-    public function index()
+    public function index(Request $req)
     {
         $curr_date = new DateTime("now");
         $interval  = new DateInterval('P1M');
@@ -131,10 +189,11 @@ class MemberReportController extends Controller
         $start_date->sub($interval);
         $data["start_date"] = $start_date->format(DATE_ONLY);
 
+        $page               = $req->get('page', 1);
         $results            = $this->get_critical($data);
         $data["end_date"]   = $curr_date->format(DATE_ONLY);
         $data["start_date"] = $start_date->format(DATE_ONLY);
-        $data               = array_merge($data, $this->get_formatted_critical_data($results));
+        $data               = array_merge($data, $this->get_formatted_critical_data($results, $page, 5));
         // dd($data["value"]);
         // foreach ($data["value"] as $key => $value)
         // {
@@ -320,13 +379,14 @@ class MemberReportController extends Controller
         return view('member.report.performance', $data);
     }
 
-    public function critical_service()
+    public function critical_service(Request $req)
     {
         $data["start_date"]  = DATE(DATE_ONLY, strtotime('first day of this month'));
         $data["end_date"]    = DATE(DATE_ONLY, strtotime('last day of this month'));
         $data['period']      = DATE('d-M-Y', strtotime('first day of this month')) . ' to ' . DATE('d-M-Y', strtotime('last day of this month'));
+        $page                = $req->get('page', 1);
         $results             = $this->get_critical($data);
-        $data                = array_merge($data, $this->get_formatted_critical_data($results));
+        $data                = array_merge($data, $this->get_formatted_critical_data($results, $page, 5));
         $data['title']       = 'My Report - Critical Service';
         $data['breadcrumps'] = ['Member Area', $data['title']];
         // dd($data);
@@ -338,8 +398,9 @@ class MemberReportController extends Controller
         $data["start_date"]  = DATE(DATE_ONLY, strtotime($req->date1));
         $data["end_date"]    = DATE(DATE_ONLY, strtotime($req->date2));
         $data['period']      = DATE('d-M-Y', strtotime($req->date1)) . ' to ' . DATE('d-M-Y', strtotime($req->date2));
+        $page                = $req->get('page', 1);
         $results             = $this->get_critical($data);
-        $data                = array_merge($data, $this->get_formatted_critical_data($results));
+        $data                = array_merge($data, $this->get_formatted_critical_data($results, $page, 5));
         $data['title']       = 'My Report - Critical Service';
         $data['breadcrumps'] = ['Member Area', $data['title']];
         // dd($data);
