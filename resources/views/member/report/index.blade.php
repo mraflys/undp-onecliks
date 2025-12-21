@@ -85,6 +85,37 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-box">
+                                <form method="GET" action="{{ route('myreport.index') }}" style="margin-bottom: 20px;">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="start_date">Start Date</label>
+                                                <input type="date" name="start_date" id="start_date" class="form-control"
+                                                    value="{{ isset($start_date) ? $start_date : '' }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="end_date">End Date</label>
+                                                <input type="date" name="end_date" id="end_date" class="form-control"
+                                                    value="{{ isset($end_date) ? $end_date : '' }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>&nbsp;</label>
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="fa fa-filter"></i> Filter
+                                                    </button>
+                                                    <a href="{{ route('myreport.index') }}" class="btn btn-default">
+                                                        <i class="fa fa-undo"></i> Reset
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                                 <div class="content">
                                     <div class="chart-container">
                                         <div id="myHighChart"></div>
@@ -92,11 +123,15 @@
                                     <?php if(isset($pagination) && $pagination['total_pages'] > 1): ?>
                                     <div class="text-center" style="margin-top: 20px;">
                                         <div class="btn-group" role="group">
+                                            <?php
+                                            $queryString = request()->has('start_date') && request()->has('end_date') ? '&start_date=' . request()->get('start_date') . '&end_date=' . request()->get('end_date') : '';
+                                            ?>
                                             <?php if($pagination['current_page'] > 1): ?>
-                                            <a href="?page=1" class="btn btn-default btn-sm">
+                                            <a href="?page=1<?php echo $queryString; ?>" class="btn btn-default btn-sm">
                                                 <i class="fa fa-angle-double-left"></i> First
                                             </a>
-                                            <a href="?page=<?php echo $pagination['current_page'] - 1; ?>" class="btn btn-default btn-sm">
+                                            <a href="?page=<?php echo $pagination['current_page'] - 1; ?><?php echo $queryString; ?>"
+                                                class="btn btn-default btn-sm">
                                                 <i class="fa fa-angle-left"></i> Prev
                                             </a>
                                             <?php endif; ?>
@@ -106,10 +141,12 @@
                                             </span>
 
                                             <?php if($pagination['current_page'] < $pagination['total_pages']): ?>
-                                            <a href="?page=<?php echo $pagination['current_page'] + 1; ?>" class="btn btn-default btn-sm">
+                                            <a href="?page=<?php echo $pagination['current_page'] + 1; ?><?php echo $queryString; ?>"
+                                                class="btn btn-default btn-sm">
                                                 Next <i class="fa fa-angle-right"></i>
                                             </a>
-                                            <a href="?page=<?php echo $pagination['total_pages']; ?>" class="btn btn-default btn-sm">
+                                            <a href="?page=<?php echo $pagination['total_pages']; ?><?php echo $queryString; ?>"
+                                                class="btn btn-default btn-sm">
                                                 Last <i class="fa fa-angle-double-right"></i>
                                             </a>
                                             <?php endif; ?>
@@ -139,7 +176,7 @@
                 text: 'Progress of Critical Services *'
             },
             subtitle: {
-                text: 'Period : <?= isset($period) ? $period : '' ?>'
+                text: 'Period : {{ isset($start_date) && isset($end_date) ? date('d-M-Y', strtotime($start_date)) . ' to ' . date('d-M-Y', strtotime($end_date)) : '' }}'
             },
             credits: {
                 enabled: false

@@ -181,19 +181,24 @@ class MemberReportController extends Controller
 
     public function index(Request $req)
     {
-        $curr_date = new DateTime("now");
-        $interval  = new DateInterval('P1M');
+        // Check if start_date and end_date are provided in query parameters
+        if ($req->has('start_date') && $req->has('end_date')) {
+            $data["start_date"] = date(DATE_ONLY, strtotime($req->start_date));
+            $data["end_date"]   = date(DATE_ONLY, strtotime($req->end_date));
+        } else {
+            // Default: current month
+            $curr_date  = new DateTime("now");
+            $interval   = new DateInterval('P1M');
+            $start_date = new DateTime("now");
+            $start_date->sub($interval);
 
-        $start_date       = new DateTime("now");
-        $data["end_date"] = $curr_date->format(DATE_ONLY);
-        $start_date->sub($interval);
-        $data["start_date"] = $start_date->format(DATE_ONLY);
+            $data["start_date"] = $start_date->format(DATE_ONLY);
+            $data["end_date"]   = $curr_date->format(DATE_ONLY);
+        }
 
-        $page               = $req->get('page', 1);
-        $results            = $this->get_critical($data);
-        $data["end_date"]   = $curr_date->format(DATE_ONLY);
-        $data["start_date"] = $start_date->format(DATE_ONLY);
-        $data               = array_merge($data, $this->get_formatted_critical_data($results, $page, 5));
+        $page    = $req->get('page', 1);
+        $results = $this->get_critical($data);
+        $data    = array_merge($data, $this->get_formatted_critical_data($results, $page, 5));
         // dd($data["value"]);
         // foreach ($data["value"] as $key => $value)
         // {
