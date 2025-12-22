@@ -1149,9 +1149,6 @@ class MemberRequestController extends Controller
 
         if (! empty($req->status)) {
             $reject = null;
-            if ($req->status == 2) {
-                $reject = "OR id_status = -1";
-            }
             $where .= " AND id_status = '" . $req->status . "' " . $reject;
         }
 
