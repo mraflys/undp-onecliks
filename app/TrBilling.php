@@ -21,11 +21,19 @@ class TrBilling extends Model
             $where .= " AND (" . $additional_filter . ")";
         }
 
-        $query = self::select(DB::raw("COALESCE(tr_billing.invoice_no, '-') AS invoice_no, tr_billing.id_billing, tr_billing.id_agency_unit_buyer, tr_billing.agency_name, tr_billing.currency_name, tr_billing.amount_billing_local, tr_billing.amount_billing, tr_billing.date_created, MAX(tr_billing_detail.date_payment) AS date_payment"))
+        $query = self::select(DB::raw("COALESCE(tr_billing.invoice_no, '-') AS invoice_no, tr_billing.id_billing, tr_billing.id_agency_unit_buyer, tr_billing.agency_name, tr_billing.currency_name, tr_billing.amount_billing_local, tr_billing.amount_billing, DATE_FORMAT(tr_billing.date_created, '%Y-%m-%d %H:%i') AS invoice_date, COALESCE(DATE_FORMAT(MAX(tr_billing_detail.date_payment), '%Y-%m-%d %H:%i'), '-') AS payment_date"))
             ->join('tr_billing_detail', 'tr_billing.id_billing', '=', 'tr_billing_detail.id_billing')
             ->whereRaw($where)
-            ->groupBy(["tr_billing.invoice_no", "tr_billing.id_billing", "tr_billing.id_agency_unit_buyer", "tr_billing.agency_name", "tr_billing.currency_name", "tr_billing.amount_billing_local", "tr_billing.amount_billing", "tr_billing.date_created"]);
-
+            ->groupBy([
+                DB::raw("COALESCE(tr_billing.invoice_no, '-')"),
+                "tr_billing.id_billing",
+                "tr_billing.id_agency_unit_buyer",
+                "tr_billing.agency_name",
+                "tr_billing.currency_name",
+                "tr_billing.amount_billing_local",
+                "tr_billing.amount_billing",
+                DB::raw("DATE_FORMAT(tr_billing.date_created, '%Y-%m-%d %H:%i')"),
+            ]);
         return $query;
     }
 

@@ -19,6 +19,10 @@
                                 </div>
                                 <div class="panel-body">
                                     <ul>
+                                        <li><a target="_blank"
+                                                href="https://app.powerbi.com/groups/me/reports/33bb6d3e-d252-4860-b624-8749cf1cd995/931d373ca5c025a5ea60?experience=power-bi"
+                                                class="waves-effect" id="cost_recovery_overview">Cost Recovery Overview</a>
+                                        </li>
                                         <li><a href="{{ route('myreport.detail') }}" class="waves-effect"
                                                 id="detail">Detail</a></li>
                                         <li><a href="{{ route('myreport.timeliness') }}" class="waves-effect"

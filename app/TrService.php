@@ -155,9 +155,8 @@ class TrService extends Model
         }
 
         if (isset($filters['with_rating_only'])) {
-            $where .= " AND (tr_service.date_rating IS NOT NULL OR tr_service.id_status=5)";
+            $where .= " OR (tr_service.date_rating IS NOT NULL)";
         }
-
         $query = "
             SELECT  tr.id_transaction, tr.transaction_code, tr.agency_name_buyer, tr.person_name_buyer, tr.service_name, tr.date_authorized,
                     tr.id_agency_unit_service, su.agency_unit_name AS agency_name_service, tr.id_status, tr.date_transaction, tr.date_finished,
