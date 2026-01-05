@@ -285,7 +285,7 @@ class TrService extends Model
             ->where('tr_service.id_transaction', $this->id_transaction)
             ->where(function ($query) {
                 $query->whereNotNull('tr_service_workflow_doc.id_transaction_workflow_doc')
-                    ->orWhereNotNull('tr_service_workflow_info.id_transaction_workflow_infos')
+                    ->orWhereNotNull('tr_service_workflow_info.id_transaction_workflow_info')
                     ->orWhereNotNull('tr_service_workflow.date_start_actual');
             })
             ->with('docs', 'infos', 'primary_pic', 'alternate_pic')
