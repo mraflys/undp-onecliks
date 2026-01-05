@@ -319,11 +319,14 @@ class MemberRequestController extends Controller
 
             if ($table_type != 'dr_service') {
                 GeneralHelper::add_log(['description' => "Create Request " . $tr_service->transaction_code, 'id_user' => \Auth::user()->id_user]);
-                $data['detail']           = TrService::find($id);
-                $dataTr['type']           = 'request_user';
-                $dataTr['ticket']         = $tr_service->transaction_code;
-                $dataTr['description']    = $tr_service->description;
-                $dataTr['id_transaction'] = $tr_service->id_transaction;
+                $data['detail']              = TrService::find($id);
+                $dataTr['type']              = 'request_user';
+                $dataTr['ticket']            = $tr_service->transaction_code;
+                $dataTr['description']       = $tr_service->description;
+                $dataTr['id_transaction']    = $tr_service->id_transaction;
+                $dataTr['service_name']      = $tr_service->service_name;
+                $dataTr['agency_name_buyer'] = $tr_service->agency_name_buyer;
+                $dataTr['user_name_buyer']   = $tr_service->user_name_buyer;
                 if ($req->all_notif_email == 1) {
                     Mail::to(\Auth::user()->email)->send(new SendMail($dataTr));
                 }

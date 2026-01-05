@@ -86,20 +86,21 @@ class ServiceListController extends Controller
     public function destroy($id)
     {
         try {
-            $row               = ServiceList::find($id);
+            $row = ServiceList::find($id);
+            // dd($row);
             $row->date_deleted = Date('Y-m-d H:i:s');
             $row->deleted_by   = \Auth::user()->user_name;
             $row->save();
             Cache::forget('service_list');
 
             GeneralHelper::add_log(['description' => "DELETE service_list id " . $id, 'id_user' => \Auth::user()->id_user]);
-            return response()->back()->with('message', 'success')->setStatusCode(200);
+            return redirect()->route('service_list.index')->with('message_success', 'Data has been deleted successfully!');
 
             // return response()->json(['message'=>'success']);
 
         } catch (\Exception $e) {
             GeneralHelper::add_log(['type' => 'error', 'description' => $e->getMessage(), 'id_user' => \Auth::user()->id_user]);
-            return response()->back()->with('message', 'error')->setStatusCode(500);
+            return redirect()->route('service_list.index')->with('message_error', $e->getMessage());
 
             // return response()->json(['message'=>'error'], 500);
         }
@@ -278,11 +279,11 @@ class ServiceListController extends Controller
 
     public function show_as_json(Request $req)
     {
-        $service        = ServiceList::find($req->id_service);
+        $servicesId = $req->id_service ? $req->id_service : $req->id_service_parent;
+        $service        = ServiceList::find($servicesId);
         $data           = $service;
         $service_prices = [];
         $group_workflow = [];
-
         if (! is_null($service)) {
             $active_price           = PriceList::active_by_service_id_parent($service->id_service)->first();
             $data['active_price']   = $active_price;

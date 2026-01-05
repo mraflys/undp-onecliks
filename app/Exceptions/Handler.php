@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         // Handle session expired (419 Page Expired)
-        if ($this->isHttpException($exception) && $exception->getStatusCode() == 419) {
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException  && $exception->getStatusCode() == 419) {
             return redirect()->route('login')->with('message_error', 'Your session has expired. Please login again.');
         }
 
