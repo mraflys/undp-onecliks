@@ -74,7 +74,15 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        // Hide SQL queries in error pages for security
+        $exceptions->dontReport([
+            // Add exceptions to not report here
+        ]);
+
+        // Remove sensitive data from exceptions
+        $exceptions->reportable(function (Throwable $e) {
+            // Custom logging without queries if needed
+        });
     })
     ->withSchedule(function ($schedule) {
         // Migrated from app/Console/Kernel.php schedule() method

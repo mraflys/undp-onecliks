@@ -273,10 +273,25 @@ class TrService extends Model
     {
         return TrServiceWorkFlow::select("tr_service_workflow.*")
             ->join("tr_service as tr_service_child", "tr_service_child.id_transaction", "=", "tr_service_workflow.id_transaction")
-            ->join("tr_service", "tr_service.id_transaction", "=", "tr_service_child.id_transaction_parent")->with('docs', 'primary_pic', 'alternate_pic')
+            ->join("tr_service", "tr_service.id_transaction", "=", "tr_service_child.id_transaction_parent")
+            ->leftJoin('tr_service_workflow_doc', function ($join) {
+                $join->on('tr_service_workflow.id_transaction_workflow', '=', 'tr_service_workflow_doc.id_transaction_workflow')
+                    ->whereNull('tr_service_workflow_doc.date_deleted');
+            })
+            ->leftJoin('tr_service_workflow_info', function ($join) {
+                $join->on('tr_service_workflow.id_transaction_workflow', '=', 'tr_service_workflow_info.id_transaction_workflow')
+                    ->whereNull('tr_service_workflow_info.date_deleted');
+            })
             ->where('tr_service.id_transaction', $this->id_transaction)
-            ->whereNotNull('tr_service_workflow.date_start_actual')
-            ->orderBy('sequence')->get();
+            ->where(function ($query) {
+                $query->whereNotNull('tr_service_workflow_doc.id_transaction_workflow_doc')
+                    ->orWhereNotNull('tr_service_workflow_info.id_transaction_workflow_info')
+                    ->orWhereNotNull('tr_service_workflow.date_start_actual');
+            })
+            ->with('docs', 'infos', 'primary_pic', 'alternate_pic')
+            ->distinct()
+            ->orderBy('tr_service_workflow.sequence')
+            ->get();
     }
 
     public function payments()

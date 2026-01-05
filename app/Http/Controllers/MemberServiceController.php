@@ -111,34 +111,34 @@ class MemberServiceController extends Controller
             }
 
             $data['detail']      = $detail;
-            $service_agency      = AgencyUnit::find($detail->id_agency_unit_service);
-            $data['users']       = SecUser::get_by_id_agency_parent($service_agency->id_agency_unit_parent);
             $data['breadcrumps'] = ['Member Area', $data['title']];
-            $data['docs']        = $detail->required_docs();
-            $data['infos']       = $detail->required_infos();
-            $data['workflows']   = $detail->service_workflows_history();
 
-            foreach ($data['docs'] as $docs) {
-                if (strpos($docs->document_path, 'assets') !== false) {
-                    $docs->document_path = asset($docs->document_path);
-                } else {
-                    if (\Storage::disk('public')->exists('files/' . $docs->document_path)) {
-                        $pathcheck = public_path($docs->document_path);
-                        $isExists  = file_exists($pathcheck);
-                        if ($isExists) {
+            $data['workflows'] = $detail->service_workflows_history();
+            // Process documents from workflows that have docs/infos or started
+            foreach ($data['workflows'] as $workflow) {
+                if ($workflow->docs) {
+                    foreach ($workflow->docs as $docs) {
+                        if (strpos($docs->document_path, 'assets') !== false) {
                             $docs->document_path = asset($docs->document_path);
                         } else {
-                            $path                = route('myservices.download_file', [$docs->document_path]);
-                            $docs->document_path = $path;
+                            if (\Storage::disk('public')->exists('files/' . $docs->document_path)) {
+                                $pathcheck = public_path($docs->document_path);
+                                $isExists  = file_exists($pathcheck);
+                                if ($isExists) {
+                                    $docs->document_path = asset($docs->document_path);
+                                } else {
+                                    $path                = route('myservices.download_file', [$docs->document_path]);
+                                    $docs->document_path = $path;
+                                }
+                            } else {
+                                $docs->document_path = asset($docs->document_path);
+                            }
                         }
-                    } else {
-                        $docs->document_path = asset($docs->document_path);
                     }
                 }
             }
 
             GeneralHelper::add_log(['description' => "View Service " . $detail->transaction_code, 'id_user' => \Auth::user()->id_user]);
-
             return view('member.service.view', $data);
         } catch (\Exception $e) {
             return redirect()->back();
