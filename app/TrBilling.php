@@ -192,6 +192,82 @@ class TrBilling extends Model
         return DB::select($query);
     }
 
+    public static function transaction_ready_to_bill_paginated($where = "", $page = 1, $perPage = 30)
+    {
+        // Build additional WHERE conditions
+        $additionalWhere = "";
+        if ($where != "") {
+            $additionalWhere = "AND (" . $where . ")";
+        }
+
+        // Count total records
+        $countQuery = "
+            SELECT COUNT(*) as total
+            FROM tr_service tr
+            INNER JOIN ms_agency_unit a ON a.id_agency_unit = tr.id_agency_unit_buyer
+            INNER JOIN ms_agency_unit p ON p.id_agency_unit = a.id_agency_unit_parent
+            LEFT JOIN tr_billing_detail bd ON bd.id_transaction = tr.id_transaction
+            LEFT JOIN tr_billing b ON b.id_billing = bd.id_billing AND b.date_deleted IS NULL
+            WHERE tr.id_transaction_parent IS NULL
+                AND tr.date_deleted IS NULL
+                AND tr.is_free_of_charge = 0
+                AND tr.date_start_billing IS NULL
+                AND tr.service_price > 0
+                AND tr.is_finished = 1
+                AND tr.id_status IN (4, 5, 6)
+                AND b.id_billing IS NULL
+                $additionalWhere";
+
+        $totalResult = DB::select($countQuery);
+        $total       = $totalResult[0]->total;
+
+        // Calculate offset
+        $offset = ($page - 1) * $perPage;
+
+        // Get paginated data
+        $query = "
+            SELECT
+                p.id_agency_unit,
+                p.agency_unit_code,
+                p.agency_unit_name,
+                tr.id_transaction,
+                tr.transaction_code,
+                tr.id_agency_unit_buyer,
+                tr.service_name,
+                tr.description,
+                tr.date_authorized,
+                tr.date_finished,
+                tr.is_finished,
+                (tr.service_price * tr.qty) as service_price,
+                tr.payment_method
+            FROM tr_service tr
+            INNER JOIN ms_agency_unit a ON a.id_agency_unit = tr.id_agency_unit_buyer
+            INNER JOIN ms_agency_unit p ON p.id_agency_unit = a.id_agency_unit_parent
+            LEFT JOIN tr_billing_detail bd ON bd.id_transaction = tr.id_transaction
+            LEFT JOIN tr_billing b ON b.id_billing = bd.id_billing AND b.date_deleted IS NULL
+            WHERE tr.id_transaction_parent IS NULL
+                AND tr.date_deleted IS NULL
+                AND tr.is_free_of_charge = 0
+                AND tr.date_start_billing IS NULL
+                AND tr.service_price > 0
+                AND tr.is_finished = 1
+                AND tr.id_status IN (4, 5, 6)
+                AND b.id_billing IS NULL
+                $additionalWhere
+            ORDER BY tr.transaction_code DESC
+            LIMIT $perPage OFFSET $offset";
+
+        $data = DB::select($query);
+
+        return [
+            'data'         => $data,
+            'current_page' => $page,
+            'per_page'     => $perPage,
+            'total'        => $total,
+            'last_page'    => ceil($total / $perPage),
+        ];
+    }
+
     public static function transaction_ready_to_bill_backup($where = "")
     {
         if ($where != "") {

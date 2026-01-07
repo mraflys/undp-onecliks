@@ -1222,6 +1222,62 @@ class MemberRequestController extends Controller
             })->make(true);
     }
 
+    public function myrequest_summary_by_agency(Request $req)
+    {
+        try {
+            $user_agency_unit_id = session('user_agency_unit_id');
+            $user_name           = session('user_name');
+            $user_id             = session('user_id');
+
+            // Validate session variables
+            if (empty($user_agency_unit_id) || empty($user_name) || empty($user_id)) {
+                return response()->json(['data' => [], 'message' => 'Session expired'], 401);
+            }
+
+            $where = "( id_agency_unit_buyer=" . $user_agency_unit_id . " OR user_name_buyer = '" . $user_name . "' )";
+            $where .= " AND id_user_buyer = " . $user_id;
+            $where .= " AND id_status = 2"; // On Going status
+            $where .= " AND date_deleted IS NULL";
+
+            // Get data using RequestQuery::ongoing to maintain consistency
+            $list = RequestQuery::ongoing($where);
+
+            // Group and count by agency_name_service
+            $grouped = [];
+            foreach ($list as $item) {
+                $agency = $item->agency_name_service;
+                if (isset($grouped[$agency])) {
+                    $grouped[$agency]++;
+                } else {
+                    $grouped[$agency] = 1;
+                }
+            }
+
+            // Convert to array format for chart
+            $results = [];
+            foreach ($grouped as $agency_name_service => $count) {
+                $results[] = (object) [
+                    'agency_name_service' => $agency_name_service,
+                    'count'               => $count,
+                ];
+            }
+
+            // Sort by count descending
+            usort($results, function ($a, $b) {
+                return $b->count - $a->count;
+            });
+
+            return response()->json(['data' => $results]);
+        } catch (\Exception $e) {
+            GeneralHelper::add_log([
+                'type'        => 'error',
+                'description' => 'myrequest_summary_by_agency: ' . $e->getMessage(),
+                'id_user'     => session('user_id', 0),
+            ]);
+            return response()->json(['data' => [], 'error' => $e->getMessage()], 500);
+        }
+    }
+
     public function history_request_search(Request $req)
     {
         /*
