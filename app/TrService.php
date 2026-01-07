@@ -122,12 +122,12 @@ class TrService extends Model
 
     public static function history_search($filters, $additional_where = null)
     {
-        $where = "WHERE tr_service.date_deleted IS NULL";
+        $where = "WHERE tr.date_deleted IS NULL";
 
         if (isset($filters['id_agency_unit_buyer'])) {
-            $filter_by_agency_and_username = " tr_service.id_agency_unit_buyer IN (" . $filters['id_agency_unit_buyer'] . ")";
+            $filter_by_agency_and_username = " tr.id_agency_unit_buyer IN (" . $filters['id_agency_unit_buyer'] . ")";
             if (isset($filters['user_name_buyer'])) {
-                $filter_by_agency_and_username .= " OR tr_service.user_name_buyer IN ('" . $filters['user_name_buyer'] . "')";
+                $filter_by_agency_and_username .= " OR tr.user_name_buyer IN ('" . $filters['user_name_buyer'] . "')";
             }
             $where .= " AND (" . $filter_by_agency_and_username . ")";
         }
@@ -135,49 +135,84 @@ class TrService extends Model
         $end_date   = isset($filters['end_date']) ? $filters['end_date'] : null;
 
         if (! is_null($start_date) && ! is_null($end_date)) {
-            $where .= " AND (DATE(tr_service.date_authorized) BETWEEN '" . $start_date . "' AND '" . $end_date . "')";
+            $where .= " AND (DATE(tr.date_authorized) BETWEEN '" . $start_date . "' AND '" . $end_date . "')";
         }
 
         if (isset($filters['id_service_unit'])) {
-            $where .= " AND tr_service.id_agency_unit_service =" . $filters['id_service_unit'];
+            $where .= " AND tr.id_agency_unit_service =" . $filters['id_service_unit'];
         }
 
         if (isset($filters['id_agency_unit_service'])) {
-            $where .= " AND tr_service.id_agency_unit_service IN (" . $filters['id_agency_unit_service'] . ")";
+            $where .= " AND tr.id_agency_unit_service IN (" . $filters['id_agency_unit_service'] . ")";
         }
 
         if (isset($filters['id_status'])) {
-            $where .= " AND tr_service.id_status IN (" . $filters['id_status'] . ")";
+            $where .= " AND tr.id_status IN (" . $filters['id_status'] . ")";
         }
 
         if (isset($filters['rating']) && $filters['rating'] > 0) {
-            $where .= " AND tr_service.service_rating IN (" . $filters['rating'] . ")";
+            $where .= " AND tr.service_rating IN (" . $filters['rating'] . ")";
         }
 
         if (isset($filters['with_rating_only'])) {
-            $where .= " OR (tr_service.date_rating IS NOT NULL)";
+            $where .= " OR (tr.date_rating IS NOT NULL)";
         }
         $query = "
-            SELECT  tr.id_transaction, tr.transaction_code, tr.agency_name_buyer, tr.person_name_buyer, tr.service_name, tr.date_authorized,
-                    tr.id_agency_unit_service, su.agency_unit_name AS agency_name_service, tr.id_status, tr.date_transaction, tr.date_finished,
-                    tr.qty, IF (tr.is_free_of_charge = 1, 0, tr.service_price) AS service_price, tr.description, tr.date_rating,
-                    IF (tr.id_status = 3, 'Rejected', IF (tr.id_status = 6, 'Cancelled', COALESCE(status_name,0))) AS status_name,
-                    IF (tr.id_status = 3, -3, IF (tr.id_status = 6, -6, COALESCE(tr.service_rating,0))) AS service_rating,
-                    a.id_agency_unit, a.agency_unit_name AS parent_agency_name, c.country_image_path, c.country_name,
-                    date_end_estimated,
-                    IF(tr.date_finished > date_end_estimated, 1, 0) AS is_delay,
-                    fn_get_number_workday(date_end_estimated, tr.date_finished, false) AS delay_duration
-            FROM (SELECT * FROM tr_service $where) tr
-            JOIN (SELECT * FROM ms_agency_unit WHERE date_deleted IS NULL) su ON tr.id_agency_unit_service = su.id_agency_unit
-            JOIN (SELECT * FROM ms_agency_unit WHERE date_deleted IS NULL) a ON su.id_agency_unit_parent=a.id_agency_unit
-            JOIN (SELECT * FROM ms_country WHERE date_deleted IS NULL) c ON a.id_country=c.id_country
-            LEFT JOIN (SELECT * FROM ms_status WHERE date_deleted IS NULL) st ON st.id_status=tr.id_status
+            SELECT
+                tr.id_transaction,
+                tr.transaction_code,
+                tr.agency_name_buyer,
+                tr.person_name_buyer,
+                tr.service_name,
+                tr.date_authorized,
+                tr.id_agency_unit_service,
+                su.agency_unit_name AS agency_name_service,
+                tr.id_status,
+                tr.date_transaction,
+                tr.date_finished,
+                tr.qty,
+                IF(tr.is_free_of_charge = 1, 0, tr.service_price) AS service_price,
+                tr.description,
+                tr.date_rating,
+                st.status_name,
+                CASE
+                    WHEN st.status_name = 'Rejected' or st.status_name = 'Cancelled' THEN 0
+                    ELSE COALESCE(tr.service_rating, 0)
+                END AS service_rating,
+                a.id_agency_unit,
+                a.agency_unit_name AS parent_agency_name,
+                c.country_image_path,
+                c.country_name,
+                g.date_end_estimated,
+                IF(tr.date_finished > g.date_end_estimated, 1, 0) AS is_delay,
+                fn_get_number_workday(g.date_end_estimated, tr.date_finished, false) AS delay_duration
+            FROM tr_service tr
+            JOIN ms_agency_unit su
+                ON su.id_agency_unit = tr.id_agency_unit_service
+            AND su.date_deleted IS NULL
+            JOIN ms_agency_unit a
+                ON a.id_agency_unit = su.id_agency_unit_parent
+            AND a.date_deleted IS NULL
+            JOIN ms_country c
+                ON c.id_country = a.id_country
+            AND c.date_deleted IS NULL
+            LEFT JOIN ms_status st
+                ON st.id_status = tr.id_status
+            AND st.date_deleted IS NULL
             JOIN (
-                  SELECT g.id_transaction_parent, MAX(date_end_estimated) AS date_end_estimated
-                  FROM (SELECT * FROM tr_service_workflow WHERE date_deleted IS NULL) wf
-                  JOIN (SELECT * FROM tr_service WHERE transaction_code IS NULL AND date_deleted IS NULL) g ON g.id_transaction=wf.id_transaction
-                  GROUP BY g.id_transaction_parent
-                  ) g ON g.id_transaction_parent=tr.id_transaction
+                SELECT
+                    g.id_transaction_parent,
+                    MAX(wf.date_end_estimated) AS date_end_estimated
+                FROM tr_service_workflow wf
+                JOIN tr_service g
+                    ON g.id_transaction = wf.id_transaction
+                AND g.transaction_code IS NULL
+                AND g.date_deleted IS NULL
+                WHERE wf.date_deleted IS NULL
+                GROUP BY g.id_transaction_parent
+            ) g
+                ON g.id_transaction_parent = tr.id_transaction
+            $where;
             ";
         return DB::select($query);
     }

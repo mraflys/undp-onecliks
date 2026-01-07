@@ -1169,7 +1169,7 @@ class MemberServiceController extends Controller
         }
 
         return Datatables::of(
-            TrService::select(DB::raw("DISTINCT tr_service.id_transaction, tr_service.transaction_code, tr_service.service_name, tr_service.description, tr_service.person_name_buyer, tr_service.agency_name_buyer, tr_service.service_price, tr_service.service_rating, tr_service.date_finished, tr_service.date_transaction, fn_get_number_workday(max_workflow.date_end_estimated, tr_service.date_finished, false) AS delay_duration, status_name,
+            TrService::select(DB::raw("DISTINCT tr_service.id_transaction, tr_service.transaction_code, tr_service.service_name, tr_service.description, tr_service.person_name_buyer, tr_service.agency_name_buyer, tr_service.service_price, COALESCE(tr_service.service_rating, 0) as service_rating, tr_service.date_finished, tr_service.date_transaction, fn_get_number_workday(max_workflow.date_end_estimated, tr_service.date_finished, false) AS delay_duration, status_name,
         date_end_estimated"))
                 ->join("ms_status", "ms_status.id_status", "=", "tr_service.id_status", "INNER")
                 ->join(DB::raw("(SELECT g.id_transaction_parent, MAX(date_end_estimated) AS date_end_estimated

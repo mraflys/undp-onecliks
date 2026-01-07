@@ -164,6 +164,24 @@
                     $('td:eq(0)', row).html(index + (api.page() * api.page.len()) + 1);
                 },
             });
+
+            // Disable auto search on keyup, only search on button click or Enter key
+            $('#mytable_filter input').unbind();
+            $('#mytable_filter input').bind('keyup', function(e) {
+                if (e.keyCode == 13) { // Enter key
+                    oTable.search(this.value).draw();
+                }
+            });
+
+            // Add search button next to search input
+            if ($('#mytable_filter .btn-search-dt').length == 0) {
+                $('#mytable_filter').append(
+                    '&nbsp;<button type="button" class="btn btn-sm btn-primary btn-search-dt"><i class="fa fa-search"></i></button>'
+                );
+                $('#mytable_filter .btn-search-dt').on('click', function() {
+                    oTable.search($('#mytable_filter input').val()).draw();
+                });
+            }
         }
 
         $(function() {
