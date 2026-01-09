@@ -26,6 +26,19 @@ class Handler extends ExceptionHandler
     ];
 
     /**
+     * Context to always be appended to exception logs.
+     *
+     * @return array
+     */
+    protected function context()
+    {
+        // Return context without sensitive SQL query data
+        return array_merge(parent::context(), [
+            // Add custom context here
+        ]);
+    }
+
+    /**
      * Report or log an exception.
      *
      * @param  \Throwable  $exception
@@ -57,6 +70,27 @@ class Handler extends ExceptionHandler
         // Handle TokenMismatchException
         if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
             return redirect()->route('login')->with('message_error', 'Your session has expired. Please login again.');
+        }
+
+        // Hide SQL queries in production/non-debug mode
+        if (! config('app.debug')) {
+            // For QueryException, show generic message without SQL details
+            if ($exception instanceof \Illuminate\Database\QueryException) {
+                if ($request->expectsJson()) {
+                    return response()->json([
+                        'message' => 'A database error occurred. Please contact support.',
+                        'error'   => 'Database Error',
+                    ], 500);
+                }
+
+                // For web requests, check if custom error view exists
+                if (view()->exists('errors.database')) {
+                    return response()->view('errors.database', [], 500);
+                }
+
+                // Fallback to simple error response
+                return response('A database error occurred. Please contact support.', 500);
+            }
         }
 
         return parent::render($request, $exception);

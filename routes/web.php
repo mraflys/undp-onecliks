@@ -192,6 +192,7 @@ Route::group(['middleware' => 'auth:web'], function () {
         # Datatables
         Route::any('request/data/ongoing_search', 'MemberRequestController@ongoing_search')->name('myrequests.ongoing_search');
         Route::any('request/data/ongoing_search_home', 'MemberRequestController@ongoing_search_home')->name('myrequests.ongoing_search_home');
+        Route::any('request/data/myrequest_summary_by_agency', 'MemberRequestController@myrequest_summary_by_agency')->name('myrequests.myrequest_summary_by_agency');
         Route::any('request/data/old_ongoing_request_search', 'MemberRequestController@old_ongoing_request_search')->name('myrequests.old_ongoing_request_search');
         Route::any('request/data/ongoing_request_search', 'MemberRequestController@ongoing_request_search')->name('myrequests.ongoing_request_search');
         Route::any('request/data/history_request_search', 'MemberRequestController@history_request_search')->name('myrequests.history_request_search');

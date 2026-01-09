@@ -68,14 +68,27 @@ class MemberBillingController extends Controller
         try {
 
             DB::beginTransaction();
-            $ids = $req->ids;
-            if ($ids == null) {
+
+            // Handle select_all flag
+            if ($req->select_all == '1') {
+                $id_agency_unit  = $req->id_agency_unit;
+                $allTransactions = TrBilling::transaction_ready_to_bill("p.id_agency_unit = $id_agency_unit");
+                $ids             = [];
+                $prices          = [];
+                foreach ($allTransactions as $transaction) {
+                    $ids[$transaction->id_transaction]    = $transaction->id_transaction;
+                    $prices[$transaction->id_transaction] = $transaction->service_price;
+                }
+            } else {
+                $ids    = $req->ids;
+                $prices = $req->prices;
+            }
+            if ($ids == null || empty($ids)) {
                 DB::rollBack();
                 GeneralHelper::add_log(['type' => 'error', 'description' => 'create billing Service Bill is empty', 'id_user' => \Auth::user()->id_user]);
                 Session::flash('message_error', "Invoice can't be created : Service to Bill cannot be empty");
                 return redirect()->back();
             }
-            $prices       = $req->prices;
             $description  = $req->description;
             $unore        = $req->unore;
             $current_date = date(DATE_TIME);
@@ -85,7 +98,7 @@ class MemberBillingController extends Controller
 
             foreach ($ids as $key => $id) {
 
-                $amount += $req->prices[$key];
+                $amount += $prices[$key];
             }
 
             $agency = AgencyUnit::find($req->id_agency_unit)->toArray();
@@ -697,11 +710,36 @@ class MemberBillingController extends Controller
             })->make(true);
     }
 
-    public function transaction_ready_to_bill($id_agency_unit)
+    public function transaction_ready_to_bill($id_agency_unit, Request $req)
     {
         if ($id_agency_unit < 0) {
             return response()->json(['message' => 'error'], 404);
         }
+
+        $page    = $req->get('page', 1);
+        $perPage = 30;
+        $search  = $req->get('search', '');
+
+        $where = "p.id_agency_unit = $id_agency_unit";
+
+        // Add search condition if search parameter is provided
+        if (! empty($search)) {
+            $searchEscaped = addslashes($search);
+            $where .= " AND (tr.transaction_code LIKE '%{$searchEscaped}%'
+                        OR tr.service_name LIKE '%{$searchEscaped}%'
+                        OR tr.description LIKE '%{$searchEscaped}%')";
+        }
+
+        $results = TrBilling::transaction_ready_to_bill_paginated($where, $page, $perPage);
+        return response()->json($results);
+    }
+
+    public function transaction_ready_to_bill_all($id_agency_unit)
+    {
+        if ($id_agency_unit < 0) {
+            return response()->json(['message' => 'error'], 404);
+        }
+
         $results = TrBilling::transaction_ready_to_bill("p.id_agency_unit = $id_agency_unit");
         return response()->json(['data' => $results]);
     }

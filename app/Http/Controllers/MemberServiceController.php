@@ -111,34 +111,34 @@ class MemberServiceController extends Controller
             }
 
             $data['detail']      = $detail;
-            $service_agency      = AgencyUnit::find($detail->id_agency_unit_service);
-            $data['users']       = SecUser::get_by_id_agency_parent($service_agency->id_agency_unit_parent);
             $data['breadcrumps'] = ['Member Area', $data['title']];
-            $data['docs']        = $detail->required_docs();
-            $data['infos']       = $detail->required_infos();
-            $data['workflows']   = $detail->service_workflows_history();
 
-            foreach ($data['docs'] as $docs) {
-                if (strpos($docs->document_path, 'assets') !== false) {
-                    $docs->document_path = asset($docs->document_path);
-                } else {
-                    if (\Storage::disk('public')->exists('files/' . $docs->document_path)) {
-                        $pathcheck = public_path($docs->document_path);
-                        $isExists  = file_exists($pathcheck);
-                        if ($isExists) {
+            $data['workflows'] = $detail->service_workflows_history();
+            // Process documents from workflows that have docs/infos or started
+            foreach ($data['workflows'] as $workflow) {
+                if ($workflow->docs) {
+                    foreach ($workflow->docs as $docs) {
+                        if (strpos($docs->document_path, 'assets') !== false) {
                             $docs->document_path = asset($docs->document_path);
                         } else {
-                            $path                = route('myservices.download_file', [$docs->document_path]);
-                            $docs->document_path = $path;
+                            if (\Storage::disk('public')->exists('files/' . $docs->document_path)) {
+                                $pathcheck = public_path($docs->document_path);
+                                $isExists  = file_exists($pathcheck);
+                                if ($isExists) {
+                                    $docs->document_path = asset($docs->document_path);
+                                } else {
+                                    $path                = route('myservices.download_file', [$docs->document_path]);
+                                    $docs->document_path = $path;
+                                }
+                            } else {
+                                $docs->document_path = asset($docs->document_path);
+                            }
                         }
-                    } else {
-                        $docs->document_path = asset($docs->document_path);
                     }
                 }
             }
 
             GeneralHelper::add_log(['description' => "View Service " . $detail->transaction_code, 'id_user' => \Auth::user()->id_user]);
-
             return view('member.service.view', $data);
         } catch (\Exception $e) {
             return redirect()->back();
@@ -1169,7 +1169,7 @@ class MemberServiceController extends Controller
         }
 
         return Datatables::of(
-            TrService::select(DB::raw("DISTINCT tr_service.id_transaction, tr_service.transaction_code, tr_service.service_name, tr_service.description, tr_service.person_name_buyer, tr_service.agency_name_buyer, tr_service.service_price, tr_service.service_rating, tr_service.date_finished, tr_service.date_transaction, fn_get_number_workday(max_workflow.date_end_estimated, tr_service.date_finished, false) AS delay_duration, status_name,
+            TrService::select(DB::raw("DISTINCT tr_service.id_transaction, tr_service.transaction_code, tr_service.service_name, tr_service.description, tr_service.person_name_buyer, tr_service.agency_name_buyer, tr_service.service_price, COALESCE(tr_service.service_rating, 0) as service_rating, tr_service.date_finished, tr_service.date_transaction, fn_get_number_workday(max_workflow.date_end_estimated, tr_service.date_finished, false) AS delay_duration, status_name,
         date_end_estimated"))
                 ->join("ms_status", "ms_status.id_status", "=", "tr_service.id_status", "INNER")
                 ->join(DB::raw("(SELECT g.id_transaction_parent, MAX(date_end_estimated) AS date_end_estimated
